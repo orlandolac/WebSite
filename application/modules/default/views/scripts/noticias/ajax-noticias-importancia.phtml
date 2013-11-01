@@ -1,0 +1,5 @@
+<?php
+foreach (Default_Model_Lista_Importancia::get() as $value) {
+    echo '<a ' . (($this->obj['user_importancia_id'] == $value[0])?('class="ativo"'):('')) . ' onclick="ajaxNoticiasImportancia(' . $this->obj['id'] . ', ' . $value[0] . ')" title="' . $value[1] . '" style="background-image: url(\'/temas/default/default/icones/' . (($this->obj['user_importancia_id'] >= $value[0])?('star_blue'):('star_gray')) . '.png\')"></a>';
+}
+?>

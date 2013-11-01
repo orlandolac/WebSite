@@ -1,0 +1,30 @@
+<?php
+if(isset($this->Lista) && count($this->Lista['resultado']) > 0){
+    if($this->Lista['pagina']['atual'] == 1 && $this->Lista['pagina']['fim'] > 1){
+        echo '<input id="fim-da-lista-partidos" type="hidden" value="' . $this->Lista['pagina']['fim'] . '">';
+    }
+    foreach ($this->Lista['resultado'] as $obj) {
+        echo '<div class="item" onmousedown="itemAdd(\'noticia_partidos\', ' . $obj['partido_id'] . ', \'' . $obj['partido_nome'] . '\')">';
+            echo '<div class="foto"><div class="img" style="' . (($obj['partido_flags'][4]==1)?('background-image: url(\'/uploads/partidos/' . $obj['partido_id'] . '/foto.png\');'):('')) . '"></div></div>';
+            echo '<div class="texto">';
+                echo '<div class="nome">' . $obj['partido_sigla'] . ', ' . $obj['partido_numero'] . '</div>';
+                echo '<div class="descricao">' . $obj['partido_nome'] . '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
+}elseif(isset($this->obj)){
+    echo '<div class="item" onmousedown="itemAdd(\'noticia_partidos\', ' . $this->obj['partido_id'] . ', \'' . $this->obj['partido_nome'] . '\')">';
+        echo '<div class="foto"><div class="img" style="' . (($this->obj['partido_flags'][4]==1)?('background-image: url(\'/dossies/ajax-foto/id/' . $this->obj['pessoa_id'] . '\');'):('')) . '"></div></div>';
+        echo '<div class="texto">';
+            echo '<div class="nome">' . $this->obj['partido_sigla'] . ', ' . $this->obj['partido_numero'] . '</div>';
+            echo '<div class="descricao">' . $this->obj['partido_nome'] . '</div>';
+        echo '</div>';
+    echo '</div>';
+}else{
+    echo '<div class="item">';
+        echo '<div class="texto">';
+            echo '<div class="descricao">Não há mais resultados.</div>';
+        echo '</div>';
+    echo '</div>';
+}
+?>

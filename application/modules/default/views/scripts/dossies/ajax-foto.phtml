@@ -1,0 +1,10 @@
+<?php
+if(isset($this->foto['imagem_tipo']) && isset($this->foto['imagem_data'])){
+    header("Content-type: {$this->foto['imagem_tipo']}");
+    echo $this->foto['imagem_data'];
+}else{
+    $tmp = getimagesize(PUBLIC_PATH . '/temas/default/default/imagens/miniatura.png');
+    header("Content-type: {$tmp['mime']}");
+    echo file_get_contents(PUBLIC_PATH . '/temas/default/default/imagens/miniatura.png');
+}
+?>

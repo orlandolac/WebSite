@@ -1,0 +1,84 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo $this->get['estado_nome'] ?> - Território - Brasil - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->get['estado_sigla'] . ', ' . $this->get['estado_nome'] ?>" />
+<meta name="description" content="<?php echo $this->get['estado_sigla'] . ', ' . $this->get['estado_nome'] ?>" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="titulo tituloSozinho BARRA-LINKS">
+        <?php
+        $ufs = Default_Model_Lista_Estado::get();
+        foreach ($ufs as $key => $value) {
+            if($key > 0 && $key != 6 && $key < 29){
+                echo '<a class="link ' . (($value[0] == $this->get['estado_sigla'])?('atual'):('')) . '" href="/brasil/territorio/' . mb_strtolower($value[0]) . '">' . $value[0] . '</a>';
+            }
+        }
+        ?>
+    </div>
+</div>
+
+<?php
+$db = Zend_Registry::get('db');
+$municipios = $db->fetchAll('SELECT * FROM pu_municipio WHERE municipio_estado_id=' . $db->quoteInto('?', $this->get['estado_id']) . ' ORDER BY municipio_nome');
+$letras = array('#' => array(), 'A' => array(), 'B' => array(), 'C' => array(), 'D' => array(), 'E' => array(), 'F' => array(), 'G' => array(), 'H' => array(), 'I' => array(), 'J' => array(), 'K' => array(), 'L' => array(), 'M' => array(), 'N' => array(), 'O' => array(), 'P' => array(), 'Q' => array(), 'R' => array(), 'S' => array(), 'T' => array(), 'U' => array(), 'V' => array(), 'W' => array(), 'X' => array(), 'Y' => array(), 'Z' => array());
+foreach ($municipios as $obj) {
+    $ini = mb_strtoupper(Alex_Util::trataNome($obj['municipio_nome'][0]));
+    if(isset($letras[$ini])){
+        $letras[$ini][] = $obj;
+    }else{
+        $letras['#'][] = $obj;
+    }
+}
+?>
+
+<div class="CONTEINER">
+    <div class="titulo tituloSozinho BARRA-LINKS">
+    <?php
+    foreach ($letras as $secao => $lista) {
+        if(count($lista) > 0){
+            echo '<a class="link" href="#' . $secao . '">' . $secao . '</a>';
+        }else{
+            unset($letras[$secao]);
+        }
+    }
+    ?>
+    </div>
+</div>
+
+<div class="RESULTADO">
+    <div class="painel resultado" id="form_miniatura">
+        <?php
+        $this->get['estado_sigla'] = mb_strtolower($this->get['estado_sigla']);
+        foreach ($letras as $secao => $lista) {
+            echo '<div class="MINIATURA"><div class="texto"><div class="nome">' . $secao . '<a name="' . $secao . '" class="topo" href="#topo">TOPO</a></div>';
+            foreach ($lista as $obj) {
+                echo '<div class="descricao"><a href="/localizacao/estado/' . $this->get['estado_sigla'] . '/municipio/' . $obj['municipio_id'] . '">' . $obj['municipio_nome'] . '</a></div>';
+            }
+            echo '</div></div>';
+        }
+        ?>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/brasil/territorio/' . $this->get['estado_sigla'] ?>" data-lang="en" data-text="Território (<?php echo $this->get['estado_nome'] ?>)" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/brasil/territorio/' . $this->get['estado_sigla'] ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/brasil/territorio/' . $this->get['estado_sigla'] ?>"></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="foto" style="background-image: url('/uploads/mapas/<?php echo $this->get['estado_sigla'] ?>.png');" href="/brasil/territorio/<?php echo $this->get['estado_sigla'] ?>"></a>
+    <div class="texto">
+        <div class="nome"><?php echo mb_strtoupper($this->get['estado_sigla']); ?></div>
+        <div class="descricao"><?php echo $this->get['estado_nome'] ?></div>
+    </div>
+</div>
+<?php
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

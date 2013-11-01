@@ -1,0 +1,143 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME ?> - Contato</title>
+<meta name="keywords" content="fale-conosco, formulário de contato, contato" />
+<meta name="description" content="Utilize o formulário de contato para se comunicar diretamente conosco." />
+<link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/com-formulario.css" />
+<script type="text/javascript" language="javascript" src="/scripts/alex/campo.js"></script>
+<script type="text/javascript" language="javascript" src="/scripts/alex/filtro.js"></script>
+<script type="text/javascript" language="javascript">
+    function salvar(){
+        erro = 0;
+        f = document.formulario;
+        
+        <?php
+        if (!Zend_Auth::getInstance()->hasIdentity()) {
+            ?>
+                if(f.contato_nome.value.length < 2){
+                    marcaCampoErro(f.contato_nome); erro++;
+                }
+                f.contato_email.value = f.contato_email.value.toLowerCase();
+                if(f.contato_email.value.length < 5 || !eEmailValido(f.contato_email.value)){
+                    marcaCampoErro(f.contato_email); erro++;
+                }
+            <?php
+        }
+        ?>
+        if(f.contato_assunto.value.length < 2){
+            marcaCampoErro(f.contato_assunto); erro++;
+        }
+        if(f.contato_mensagem.value.length < 2){
+            marcaCampoErro(f.contato_mensagem); erro++;
+        }
+        if(erro == 0){
+            f.submit();
+        }
+    }
+</script>
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <div class="topico">FALE CONOSCO</div>
+        <div class="p">
+            Estaremos sempre por aqui tentando organizar e disponibilizar informações que possam ser
+            úteis para que cada brasileiro tenha facilidade em <b>conhecer e influenciar</b> os políticos
+            que nos representam no comando do país.
+        </div>
+        <div class="p">
+            Não temos a solução, mas acreditamos que ela esteja na nossa união! Juntos, jamais seremos
+            vencidos! Caso você tenha <b>ideias, elogios, críticas, dúvidas, conselhos, sugestões,
+            problemas</b> e etc., <b>compartilhar conosco</b> utilizando o formulário abaixo, queremos
+            muito saber o que fazer para que juntos possamos criar um Brasil melhor.
+        </div>
+    </div>
+    <form class="FORMULARIO" name="formulario" action="/contato" method="post" >
+        <center>
+            <table>
+                <?php
+                if (!Zend_Auth::getInstance()->hasIdentity()) {
+                    ?>
+                    <tr><th>Nome
+                            <div class="DICA-ICONE">
+                                <div class="DICA">
+                                    <div class="corpo">
+                                        <div class="topico">Campo obrigatório.</div>
+                                        <div class="texto">Escreva seu nome completo neste campo.</div>
+                                    </div>
+                                    <div class="seta"></div>
+                                </div>
+                            </div>
+                        </th>
+                        <td><input onclick="desmarcaCampo(this)" onkeypress="desmarcaCampo(this)" value="<?php echo $this->obj['contato_nome'] ?>" name="contato_nome" maxlength="100" type="text" class="Text" ></td>
+                    </tr>
+                    <tr><th>E-mail
+                            <div class="DICA-ICONE">
+                                <div class="DICA">
+                                    <div class="corpo">
+                                        <div class="topico">Campo obrigatório.</div>
+                                        <div class="texto">Neste campo coloque o seu e-mail para que sua mensagem seja respondida, se necessário.</div>
+                                    </div>
+                                    <div class="seta"></div>
+                                </div>
+                            </div>
+                        </th>
+                        <td><input onclick="desmarcaCampo(this)" onkeypress="desmarcaCampo(this); mascara(this, soEmail)" onkeyup="setPosCursor()" value="<?php echo $this->obj['contato_email'] ?>" name="contato_email" maxlength="100" type="text" class="Text" ></td>
+                    </tr>
+
+                    <tr><th class="opcoes" colspan="2"></th></tr>
+                    <?php
+                }
+                ?>
+                <tr><th>Assunto
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Escreva neste campo o assunto da mensagem.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input onclick="desmarcaCampo(this)" onkeypress="desmarcaCampo(this)" value="<?php echo $this->obj['contato_assunto'] ?>" name="contato_assunto" maxlength="100" autocomplete="off" type="text" class="Text" ></td>
+                </tr>
+                <tr><th><div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Escreva a sua mensagem neste campo de forma clara e sucinta, com no máximo 1024 caracteres.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                        Mensagem <br/><br/>
+                        <sup>
+                            Ideia<br/>
+                            Elogio<br/>
+                            Crítica<br/>
+                            Dúvida<br/>
+                            Conselho<br/>
+                            Sugestão<br/>
+                            Problema<br/>
+                            Etc.<br/>
+                        </sup>
+                        
+                    </th>
+                    <td><textarea onclick="desmarcaCampo(this)" onkeypress="desmarcaCampo(this)" value="<?php echo $this->obj['contato_mensagem'] ?>" name="contato_mensagem" maxlength="1024" autocomplete="off"></textarea></td>
+                </tr>
+
+                <tr><td class="opcoes" colspan="2">
+                        <a class="alex-bt destaque verde-minimo" onclick="salvar()">Enviar</a>
+                        <a class="alex-bt" onclick="document.formulario.reset()">Limpar</a>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </form>
+</div>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

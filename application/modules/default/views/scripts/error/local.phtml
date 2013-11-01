@@ -1,0 +1,38 @@
+<div class="CONTEINER DO-CENTRO" style="overflow: visible">
+    <div class="painel texto fim" style="padding: 10px">
+        <?php $this->placeholder('Head')->captureStart() ?>
+        <title><?php echo DFL_NOME ?> - Registro de Exceção</title>
+        <style>
+            .TUDO .CONTEUDO .ConteudoEsquerda{display: none}
+            .TUDO .CONTEUDO .Caixa .SeparaEsquerda{margin-left: 0}
+            .TUDO .CONTEUDO .Caixa .SeparaEsquerda .SeparaDireita{margin-right: 0}
+            .TUDO .CONTEUDO .Caixa .SeparaEsquerda .ConteudoDireita{display: none}
+        </style>
+        <?php $this->placeholder('Head')->captureEnd() ?>
+        <h1>Ops! Temos um probleminha... :)</h1>
+        <h2><?php echo $this->message . ' ' . $this->request->getParam('module') . '.'; ?></h2>
+
+        <?php if (isset($this->exception)) : ?>
+        <br/><h3>Informações sobre o erro: </h3>
+        <pre>
+Hora......: <?php echo date('H:i:s') . "\n"; ?>
+Data......: <?php echo date('d-m-Y') . "\n"; ?>
+Mensagem..: <?php echo $this->exception->getMessage() . "\n"; ?>
+Módulo....: <?php echo $this->request->getParam('module') . "\n"; ?>
+Versão....: 1.0 Beta
+Arquivo...: <?php echo $this->exception->getFile() . "\n"; ?>
+Linha.....: <?php echo $this->exception->getLine() . "\n"; ?>
+Codigo....: <?php echo $this->exception->getCode() . "\n"; ?></pre>
+
+        <h3>Parâmetros da requisição:</h3>
+        <pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+
+        <h3>Restreamento: </h3>
+        <pre><?php echo $this->exception->getTraceAsString() ?></pre>
+
+        <h3>Cache: </h3>
+        <pre><?php //print_r($this->exception->getTrace()) ?></pre>
+
+        <?php endif ?>
+    </div>
+</div>

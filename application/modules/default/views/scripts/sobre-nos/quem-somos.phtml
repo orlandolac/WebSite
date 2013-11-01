@@ -1,0 +1,73 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME ?> - Sobre nós - Quem Somos</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <div class="topico">QUEM SOMOS</div>
+        <div class="p">
+            Na verdade, por enquanto, por trás deste projeto, “somos” apenas eu: Alex de Oliveira, 23 anos, formado em Sistemas de Informação e cidadão brasileiro com muita vontade de ter um país mais justo, seguro, educado, saudável e até mesmo barato, enfim um Brasil melhor.
+        </div>
+        <div class="p">
+            Mas não estou completamente sozinho, quem tem bons amigos nunca está! Por isso gostaria de agradecer a todos que contribuíram com sugestões, conselhos, dinheiro e/ou qualquer outro tipo de apoio. Muito Obrigado!
+        </div>
+        
+        <div class="topico"><x style="color: #00f">DIREITA?</x> <x style="color: #f00">ESQUERDA?</x> EU QUERO É IR PRA FRENTE!</div>
+        <div class="p">
+            Ao contrário do que pode parecer eu nunca gostei de política, até pouco tempo nem sabia o que significava “direita” e “esquerda”, lia muito pouco sobre o assunto e nunca tinha parado para pensar em qualquer coisa relacionada, discurso de político era só um bom momento para economizar na conta de energia, desligando a televisão, e por não saber muita coisa, também não discutia com ninguém.
+        </div>
+        <div class="p">
+            Hoje as coisas são diferentes, não quero mais fazer parte da parcela que finge estar tudo bem. Quero participar da mudança deste país e sei que sozinho não vou conseguir nada, por isso quero ajudar outras pessoas a fazerem o mesmo. Foi com este objetivo que nasceu o projeto “OPovoUnido.com”.
+        </div>
+        <div class="p">
+            Acho extremamente válido que as pessoas saiam à rua para reivindicar seus direitos e pedir melhorias, mas também acho um contrassenso: sair para pedir educação e jogar lixo no chão; sair para pedir segurança e praticar violência; reclamar do político ladrão e votar nele na próxima eleição;
+        </div>
+        <div class="p">
+            Eu não me sinto posicionado a direita ou à esquerda, menos ainda me identifico com algum partido, pior acho que os partidos não representam mais ninguém além deles. Acho que o povo precisa tomar de volta um pouco do seu poder.
+            Estamos em uma democracia e acho que o desejo da maioria deve prevalecer mesmo contra o meu ou o seu interesse, por isso o projeto deverá ser mantido de forma imparcial, apartidária e sem finalidade lucrativa.
+        </div>
+        
+        <div class="topico"><x style="color: #3a3">A IDEIA</x></div>
+        <div class="p">
+            Tudo começou de fato com o projeto da ficha limpa. Achei incrível o fato de ter uma lei criada diretamente pela vontade popular. Só depois eu descobri que isso já tinha acontecido outras três vezes. Eu fiquei a pensar: “Como pode o povo possuir tal poder e não utiliza-lo?”.
+        </div>
+        <div class="p">
+            Pesquisando mais descobri que não era tão simples, eram necessários mais de um milhão de assinaturas e colher tantas assinaturas era um trabalho gigantesco. Pensei, se o Brasil tem mais de 80 milhões de pessoas conectadas deve ser mais fácil conseguir assinaturas on-line. Foi então que descobri e comecei a usar um site de petições públicas, já famoso e muito utilizado.
+        </div>
+        <div class="p">
+            Mas ainda sentia que precisava de algo mais. Certo dia, navegando pelo site do TSE, cheguei a uma página que disponibilizava para downloads dados das eleições de vários anos. Resolvi baixar um deles e dar uma olhada. Foi ai que a cabeça borbulhou de ideias! Fiquei muito empolgado, no dia seguinte já comprei o domínio e terminei de fazer download de todos os outros arquivos desta página. Analisei um pouco melhor os arquivos e fui direto para o Modelo Lógico do banco de dados. Para economizar tempo resolvi utilizar o mesmo layout de outro sistema que eu estava desenvolvendo. Em pouco mais de duas semanas já tinha a estrutura e algumas telas funcionando.
+        </div>
+        <div class="p">
+            Alegria de pobre dura pouco! Comecei a ter alguns problemas com os dados do TSE, problemas de normalização, problemas de duplicidade e etc. Havia dados das eleições de 1994 a 2012 e ao longo do tempo algumas coisas mudaram e não havia como integrar os dados. Tive que voltar e analisar todas as informações para cada eleição e planejar como juntar tudo. Passei a trabalhar no projeto apenas um ou dois dias na semana.
+        </div>
+        <div class="p">
+            Algum tempo depois eu consegui normalizar e cadastrar tudo em um único banco de dados. Solicitei ao TSE as fotos dos candidatos e recebi os links para fazer download das fotos das eleições de 2012. Eram mais de 1,6 milhão de políticos cadastrados e foi ai que descobri outro problema. Eu tinha planejado juntar as candidaturas que tivessem o mesmo Título de Eleitor, que era para ser um número exclusivo para cada pessoa. Não deu! Havia várias ocorrências de pessoas completamente diferentes com o mesmo Título de Eleitor. Solicitei um esclarecimento ao TSE, mas nunca fui respondido.
+        </div>
+        <div class="p">
+            O jeito foi improvisar, através de um script concatenei todas as candidaturas que tinham pessoas iguais e comecei a analisar manualmente as diferentes. Como o TSE não me passou as fotos das eleições dos anos anteriores, eu comecei a fazer scripts que extraíssem estas fotos, uma a uma, automaticamente, de alguns sites e mesmo assim as candidaturas mais antigas ficaram sem fotos.
+        </div>
+        <div class="p">
+            O projeto ficou parado por alguns meses e quase um ano depois da compra do domínio veio incentivo que faltava para retoma-lo. Li em um site sobre uma maratona hacker, o 1º Hackathon da Câmara dos Deputados, eles iriam selecionar projetos, me inscrevi e um mês antes da maratona saiu o resultado e "OPovoUnido.com" tinha sido selecionado.
+        </div>
+        <div class="p">
+            Correria! Um mês para tirar o máximo de ideias do papel e disputar com outras ideias muito boas.
+        </div>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/sobre-nos/quem-somos' ?>" data-send="false" data-layout="box_count" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-href="<?php echo DFL_URL . '/sobre-nos/quem-somos' ?>" data-size="tall" ></div><br/>
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/sobre-nos/quem-somos' ?>" data-lang="en" data-text="Quem Somos (<?php echo DFL_URL ?>)" data-dnt="true" data-count="vertical"></a><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

@@ -1,0 +1,135 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo $this->obj['projeto_nome'] . ' - Projetos - ' . DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->obj['projeto_nome'] ?>" />
+<meta name="description" content="<?php echo $this->obj['projeto_ementa'] ?>" />
+<link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/com-tabela.css" />
+<style>
+    .tabVotacao{
+        margin: 0 20px 0 20px;
+        display: table;
+        width: 694px;
+    }
+    .tabVotacao .votoGrupo{
+        display: table-cell;
+        background:#eee;
+        width:50%
+    }
+    .tabVotacao .votoGrupo .votoTitulo{
+        display: block;
+        background:#ddd;
+        font-weight: bold;
+        text-align: center;
+        font-size: 15px;
+        color: #fff
+    }
+    .tabVotacao .votoGrupo .votoLista{
+        display: block;
+        padding: 5px;
+        font-size: 13px;
+    }
+    .tabVotacao .votoGrupo .votoLista .lstGrupo{
+        font-size: 15px;
+        font-weight: bold;
+        display: block;
+        margin: 10px 0 5px 0; 
+        padding: 0 3px;
+    }
+    .tabVotacao .votoGrupo .votoLista .item{
+        border:1px solid #bbb;
+        border-radius:4px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        display: inline-block;
+        margin: 3px;
+        padding: 3px 5px;
+        transition: all 0.2s linear;
+    }
+    .tabVotacao .votoGrupo .votoLista .item:hover{
+        border-color: #000;
+        background: #aaa;
+        color: #fff;
+        transition: all 0.2s linear;
+    }
+    .tabVotacao .votoGrupo .votoListaSim .item:hover{
+        border-color: #000;
+        background: #3a0;
+        color: #fff;
+        transition: all 0.2s linear;
+    }
+    .tabVotacao .votoGrupo .votoListaNao .item:hover{
+        border-color: #000;
+        background: #a30;
+        color: #fff;
+        transition: all 0.2s linear;
+    }
+</style>
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <?php
+            if($this->obj['projeto_descricao']!=''){
+                ?>
+                <div class="topico">DESCRIÇÃO</div>
+                <div class="p">
+                    <?php echo $this->obj['projeto_descricao'] ?>
+                </div>
+                <?php
+            }
+            if($this->obj['projeto_descricao']!=''){
+                ?>
+                <div class="topico">RESUMO</div>
+                <div class="p">
+                    <?php echo $this->obj['projeto_resumo'] ?>
+                </div>
+                <?php
+            }
+        ?>
+        
+        <div class="topico">EMENTA</div>
+        <div class="p">
+            <?php echo $this->obj['projeto_ementa'] ?>
+        </div>
+        <div class="topico">EMENTA EXPLICADA</div>
+        <div class="p">
+            <?php echo ($this->obj['projeto_ementa_explicada']!='')?($this->obj['projeto_ementa_explicada']):('<i>Indisponível</i>')?>
+        </div>
+    </div>
+</div>
+
+<div class="CONTEINER">
+    <div class="titulo">Votação</div>
+    <div id="VOTACAO" style="padding-bottom: 20px;">
+        <div class="LOADING-ESPECIFICO"></div>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/projetos/' . $this->obj['projeto_id'] ?>" data-lang="en" data-text="<?php echo $this->obj['projeto_nome'] ?>" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/projetos/' . $this->obj['projeto_id'] ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/projetos/' . $this->obj['projeto_id'] ?>"></div><br/>
+</div>
+
+
+<script type="text/javascript" language="javascript">
+    function pegaVotacao(){
+        $.post('/projetos/ajax-projetos-votacao/id/0', {
+            'sigla': '<?php echo substr($this->obj['projeto_nome'], 0, strpos($this->obj['projeto_nome'], ' ')) ?>',
+            'numero': <?php echo $this->obj['projeto_numero'] ?>,
+            'ano': <?php echo $this->obj['projeto_ano'] ?>
+        }, function(data){
+            document.getElementById('VOTACAO').innerHTML = data.toString();
+        }, 'html');
+    }
+    window.onload(pegaVotacao());
+</script>
+
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/projetos/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

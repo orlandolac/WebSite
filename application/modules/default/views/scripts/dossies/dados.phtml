@@ -1,0 +1,76 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Dados - <?php echo $this->obj['pessoa_nome'] . ' - Dossiês - ' . DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->obj['pessoa_cpf'] . ', ' . $this->obj['pessoa_titulo_eleitor'] . ', ' . $this->obj['pessoa_nome'] ?>" />
+<meta name="description" content="<?php echo $this->obj['pessoa_nome'] ?>" />
+<link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/com-tabela.css" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<?php
+if($this->obj['pessoa_id'] > 0){
+    $db = Zend_Registry::get('db');
+    $res = $db->fetchRow('SELECT * FROM pu_pessoa_detalhe D, pu_ocupacao O WHERE pessoa_id=' . $db->quoteInto('?', $this->obj['pessoa_id'] ) . ' && D.pessoa_ocupacao_id=O.ocupacao_id');
+    if($res){
+        foreach ($res as $key => $value) {
+            $this->obj[$key] = $value;
+        }
+        ?>
+        <div class="RESULTADO">
+            <div class="MINIATURA TABELA">
+                <table class="tabela detalhe">
+                    <tr><td colspan="2"><sub>Apelido</sub><?php echo $this->obj['pessoa_apelido'] ?></td>
+                        <td><sub>Código</sub><?php echo $this->obj['pessoa_id'] ?></td>
+                    </tr>
+                    <tr><td colspan="2"><sub>Nome</sub><?php echo $this->obj['pessoa_nome'] ?></td>
+                        <td><sub>Data de Nascimento<obs><?php echo Alex_Util::getIdade($this->obj['pessoa_data_nascimento']) . ' anos' ?></osb></sub><?php echo $this->obj['pessoa_data_nascimento'] ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><sub>Estado Natal</sub><?php $uf = Default_Model_Lista_Estado::get($this->obj['pessoa_nat_estado_id']); echo $uf[1] ?></td>
+                        <td><sub>Município Natal</sub><?php echo $this->obj['pessoa_endereco'] ?> </td>
+                    </tr>
+                    <tr>
+                        <td><sub>Escolaridade</sub><?php echo Default_Model_Lista_Escolaridade::get($this->obj['pessoa_escolaridade_id']) ?></td>
+                        <td width="220px"><sub>Sexo</sub><?php echo Default_Model_Lista_Sexo::get($this->obj['pessoa_sexo_id']) ?></td>
+                        <td width="220px"><sub>Estado Civil</sub><?php echo Default_Model_Lista_EstadoCivil::get($this->obj['pessoa_estado_civil_id']) ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><sub>Ocupação</sub><?php echo $this->obj['ocupacao_nome'] ?></td>
+                    </tr>
+                </table>
+                <table class="tabela detalhe">
+                    <tr><td><sub>Site</sub><?php echo $this->obj['pessoa_site'] ?> </td></tr>
+                    <tr><td><sub>E-Mail</sub><?php echo $this->obj['pessoa_email'] ?> </td></tr>
+                    <tr><td><sub>Telefone</sub><?php echo $this->obj['pessoa_telefone'] ?> </td></tr>
+                    <tr><td><sub>Fax</sub><?php echo $this->obj['pessoa_fax'] ?> </td></tr>
+                    <tr><td><sub>Endereço</sub><?php //echo $this->obj['pessoa_endereco'] ?> </td></tr>
+                </table>
+                <table class="tabela detalhe">
+                    <tr>
+                        <td><sub>Facebook</sub> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/></td>
+                        <td width="220px"><sub>Google+</sub> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/></td>
+                        <td width="220px"><sub>Twiter</sub> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/></td>
+                    </tr>
+                    <tr><td colspan="3"><sub>Outras Redes Sociais</sub> </td></tr>
+                </table>
+                <div class="texto">
+                    <div class="ps">* Dados coletados do Tribunal Superior Eleitoral.</div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+}
+
+$this->placeholder('ConteudoSocialize')->captureStart();
+?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/dados' ?>" data-lang="en" data-text="Dados (<?php echo $this->obj['pessoa_apelido'] ?>)" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/dados' ?>" data-send="false" data-layout="box_count" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/dados' ?>" data-size="tall" ></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/dossies/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

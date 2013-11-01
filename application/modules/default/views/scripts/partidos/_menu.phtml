@@ -1,0 +1,17 @@
+<div class="MINIATURA">
+    <a class="foto" style="background-image: url('/uploads/partidos/<?php echo $this->obj['partido_id'] ?>/foto.png');" href="/partidos/<?php echo $this->obj['partido_url'] ?>"></a>
+    <div class="texto">
+        <div class="nome"><?php echo mb_strtoupper($this->obj['partido_sigla']) ?></div>
+        <div class="descricao"><?php echo $this->obj['partido_nome'] ?></div>
+    </div>
+    <div class="menu">
+        <?php
+        $action = explode('/', $_SERVER['REQUEST_URI'] . '/');
+        $action = $action[3];
+        ?>
+        <a class="op <?php echo ($action == 'noticias')?('opAtivo'):('')?>" href="/partidos/<?php echo $this->obj['partido_url'] ?>/noticias" title="Projetos">Notícias<img src="/temas/default/default/icones/rss.png" /></a>
+        <a class="op <?php echo ($action == 'projetos')?('opAtivo'):('')?>" href="/partidos/<?php echo $this->obj['partido_url'] ?>/projetos" title="Projetos">Projetos<img src="/temas/default/default/icones/page.png" /></a>
+        <!--a class="op <?php echo ($action == 'patrimonios')?('opAtivo'):('')?>" href="/partidos/<?php echo $this->obj['partido_url'] ?>/patrimonios" title="Patrimônios">Patrimônios<img src="/temas/default/default/icones/page.png" /></a-->
+        <!--a class="op <?php echo ($action == 'candidaturas')?('opAtivo'):('')?>" href="/partidos/<?php echo $this->obj['partido_url'] ?>/candidaturas" title="Candidaturas">Candidaturas<img src="/temas/default/default/icones/page.png" /></a-->
+    </div>
+</div>

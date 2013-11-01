@@ -1,0 +1,151 @@
+.TABELA{
+    width: 734px;
+/*    background-image: url('/temas/default/default/imagens/miniatura.png');
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size: 110% 110%;*/
+}
+.TABELA .ANO{
+    color: #5b5;
+    text-align: right;
+    position: absolute;
+    margin: 42px 0 0 -55px;
+    width: 150px;
+    height: 60px;
+    font-size: 60px;
+    line-height: 60px;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.TABELA .tabela{
+    background: #fff;
+    margin: 4px 4px 0 4px;
+    width: 726px;
+    min-width: 726px;
+    max-width: 726px;
+    border-collapse:collapse;
+}
+.TABELA .tabela tr th{
+    border:1px solid #ddd;
+    padding:5px 10px;
+    font-weight:bold;
+    text-align:left;
+    color:#000;
+    line-height:20px;
+    vertical-align:middle;
+    background:#efe;
+    transition: all 0.2s linear;
+}
+.TABELA .tabela tr th:hover{
+    background:#dfd;
+    transition: all 0.2s linear;
+}
+.TABELA .tabela tr th:hover .DICA{
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.2s linear 0.5s;
+}
+.TABELA .tabela tr td{
+    border:1px solid #ddd;
+    padding:6px 10px 4px 10px;
+    font-weight:bold;
+    text-align:left;
+    color:#666;
+    line-height:20px;
+    vertical-align:top;
+    transition: all 0.2s linear;
+}
+.TABELA .tabela tr td comp{
+    color: #8a8;
+}
+.TABELA .tabela tr:hover td{
+    background:#f8f8f8;
+    transition: all 0.2s linear;
+}
+.TABELA .tabela tr td sub{
+    display:block;
+    font-size:10px;
+    color:#999;
+    text-align:left;
+}
+.TABELA .tabela tr td obs{
+    float:right;
+}
+.TABELA .tabela tr td a{
+    color:#000;
+    text-decoration: underline;
+}
+.TABELA .tabela tr .contrario{
+    text-align:right;
+}
+.TABELA .tabela tr img{
+    margin: 0 0 -6px 0;
+    width:20px;
+}
+.TABELA .tabela .checkbox{
+    vertical-align:middle;
+    margin:-2px 7px 0 0;
+    padding:0;
+}
+.TABELA .detalhe td, .TABELA .detalhe th{
+    font-size: 15px;
+}
+.TABELA .detalhe tr:hover td{
+    background: #fff;
+}
+.TABELA .detalhe tr td:hover{
+    background:#f8f8f8;
+    transition: all 0.2s linear;
+}
+
+/*
+.RESULTADO .resultado .tabela{
+    width:730px;
+    background:#fff;
+    border-collapse:collapse;
+    margin: 10px 4px 0 4px;
+}
+.RESULTADO .resultado .tabela tr th{
+    border:1px solid #ddd;
+    padding:5px 10px;
+    font-weight:bold;
+    text-align:left;
+    color:#000;
+    line-height:20px;
+    vertical-align:middle;
+    background:#efe;
+    transition: all 0.2s linear;
+}
+.RESULTADO .resultado .tabela tr th:hover{
+    background:#dfd;
+    transition: all 0.2s linear;
+}
+.RESULTADO .resultado .tabela tr th:hover .DICA{
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.2s linear 0.5s;
+}
+.RESULTADO .resultado .tabela tr td{
+    border:1px solid #ddd;
+    padding:6px 10px 4px 10px;
+    font-weight:bold;
+    text-align:left;
+    color:#666;
+    line-height:20px;
+    vertical-align:top;
+    transition: all 0.2s linear;
+}
+.RESULTADO .resultado .tabela tr:hover td{
+    background:#f8f8f8;
+    transition: all 0.2s linear;
+}
+.RESULTADO .resultado .tabela tr td sub{
+    display:block;
+    font-size:10px;
+    color:#999;
+    text-align:left;
+}
+*/

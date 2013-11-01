@@ -1,0 +1,26 @@
+<div class="MINIATURA">
+    <a class="foto" style="<?php echo (($this->obj['user_icone']!='')?('background-image: url(\'' . $this->obj['user_icone'] . '\');'):('')) ?>" href="/perfil/<?php echo $this->obj['user_id'] ?>"></a>
+    <div class="texto">
+        <div class="nome"><?php echo $this->obj['user_apelido'] ?></div>
+        <div class="descricao"><?php echo $this->obj['user_nome'] ?></div>
+    </div>
+    <div class="menu">
+        <?php
+        $action = explode('/', $_SERVER['REQUEST_URI'] . '/');
+        $action = $action[2];
+        ?>
+        <a class="op <?php echo ($action == 'noticias')?('opAtivo'):('')?>" href="/user/noticias" title="Notícias">Notícias<img src="/temas/default/default/icones/rss.png" /></a>
+        <a class="op <?php echo ($action == 'projetos')?('opAtivo'):('')?>" href="/user/projetos" title="Projetos">Projetos<img src="/temas/default/default/icones/page.png" /></a>
+        <!--a class="op <?php echo ($action == 'partidos')?('opAtivo'):('')?>" href="/user/partidos" title="Partidos">Partidos<img src="/temas/default/default/icones/green_flag.png" /></a-->
+        <!--a class="op <?php echo ($action == 'politicos')?('opAtivo'):('')?>" href="/user/politicos" title="Políticos">Políticos<img src="/temas/default/default/icones/user.png" /></a-->
+    </div>
+</div>
+
+<div class="MINIATURA">
+    <div class="menu" style="margin-top: -1px">
+        <a class="op <?php echo ($action == 'preferencias')?('opAtivo'):('')?>" href="/user/preferencias">Preferências<img src="/temas/default/default/icones/process.png" /></a>
+        <a class="op <?php echo ($action == 'configurar-dados')?('opAtivo'):('')?>" href="/user/configurar-dados">Configurar Dados<img src="/temas/default/default/icones/user.png" /></a>
+        <a class="op <?php echo ($action == 'configurar-senha')?('opAtivo'):('')?>" href="/user/configurar-senha">Configurar Senha<img src="/temas/default/default/icones/id_card.png" /></a>
+        <a class="op <?php echo ($action == 'fechar-conta')?('opAtivo'):('')?>" href="/user/fechar-conta">Fechar Conta</a>
+    </div>
+</div>

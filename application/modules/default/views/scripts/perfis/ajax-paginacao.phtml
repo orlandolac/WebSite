@@ -1,0 +1,11 @@
+<?php
+foreach ($this->Lista['resultado'] as $obj) {
+    echo '<div class="MINIATURA">';
+        echo '<a class="foto" href="/perfis/' . $obj['user_id'] . '" style="' . ((strlen($obj['user_icone']) > 0)?('background-image: url(\'' . $obj['user_icone'] . '\');'):('')) . '"></a>';
+        echo '<div class="texto">';
+            echo '<div class="nome">' . $obj['user_apelido'] . '</div>';
+            echo '<div class="descricao">' . $obj['user_nome'] . '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+?>

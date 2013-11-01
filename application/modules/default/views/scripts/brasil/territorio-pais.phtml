@@ -1,0 +1,168 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Território - Brasil - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<style type="text/css">
+    ul#map {display: block; margin: 0; padding: 0; width: 570px; height: 585px; background-image: url('/uploads/mapas/mapa.png');}
+    ul#map li {display: block; padding: 0; position: absolute;}
+
+    li#crs {margin-top: 485px; margin-left: 237px; }
+    li#csc {margin-top: 467px; margin-left: 292px;}
+    li#cpr {margin-top: 416px; margin-left: 281px;}
+    li#csp {margin-top: 375px; margin-left: 303px; z-index:9999; }
+    li#cms {margin-top: 336px; margin-left: 229px;}
+    li#crj {margin-top: 390px; margin-left: 422px; z-index:9999; }
+    li#ces {margin-top: 347px; margin-left: 467px; z-index:9999; }
+    li#cmg {margin-top: 292px; margin-left: 333px; z-index:9998; }
+    li#cgo {margin-top: 264px; margin-left: 301px; z-index:9999; }
+    li#cdf {margin-top: 311px; margin-left: 373px; z-index:9999; }
+    li#cba {margin-top: 207px; margin-left: 397px;}
+    li#cmt {margin-top: 189px; margin-left: 180px;}
+    li#cro {margin-top: 199px; margin-left: 104px; z-index:9998; }
+    li#cac {margin-top: 185px; margin-left: 0px;}
+    li#cam {margin-top: 46px; margin-left: 3px;}
+    li#crr {margin-top: 0; margin-left: 133px;}
+    li#cpa {margin-top: 40px; margin-left: 219px;}
+    li#cap {margin-top: 13px; margin-left: 278px;}
+    li#cma {margin-top: 94px; margin-left: 366px; z-index:9999;}
+    li#cto {margin-top: 156px; margin-left: 338px;}
+
+    li#cse {margin-top: 221px; margin-left: 519px; z-index:9998;}
+    li#cal {margin-top: 211px; margin-left: 518px; z-index:9999;}
+    li#cpe {margin-top: 188px; margin-left: 473px;}
+    li#cpb {margin-top: 169px; margin-left: 511px; z-index:9999;}
+    li#crn {margin-top: 151px; margin-left: 514px;}
+    li#cce {margin-top: 121px; margin-left: 473px;}
+    li#cpi {margin-top: 120px; margin-left: 406px; z-index:9997;}
+
+    ul#map li a {display: block; text-decoration: none; position: absolute;}
+    a#rs {width: 116px; height: 101px; }
+    a#sc {width: 81px; height: 53px; }
+    a#pr {width: 97px; height: 64px; }
+    a#sp {width: 131px; height: 84px; }
+    a#ms {width: 106px; height: 104px; }
+    a#rj {width: 58px; height: 40px; }
+    a#es {width: 33px; height: 51px; }
+    a#mg {width: 163px; height: 131px; }
+    a#go {width: 108px; height: 108px; }
+    a#df {width: 16px; height: 9px; }
+    a#ba {width: 136px; height: 148px; }
+    a#mt {width: 166px; height: 161px; }
+    a#ro {width: 104px; height: 87px; }
+    a#ac {width: 108px; height: 62px; }
+    a#am {width: 258px; height: 181px;}
+    a#rr {width: 87px; height: 103px; }
+    a#pa {width: 188px; height: 187px; }
+    a#ap {width: 73px; height: 85px; }
+    a#ma {width: 102px; height: 139px; }
+    a#to {width: 74px; height: 125px; }
+    a#se {width: 28px; height: 32px; }
+    a#al {width: 46px; height: 27px; }
+    a#pe {width: 97px; height: 34px; }
+    a#pb {width: 59px; height: 35px; }
+    a#rn {width: 53px; height: 33px; }
+    a#ce {width: 61px; height: 76px; }
+    a#pi {width: 83px; height: 124px; }
+
+    a#pa:hover, a#pa:active, a#am:hover, a#am:active, a#mt:hover, a#mt:active, a#ba:hover, a#ba:active, a#ma:hover, a#ma:active,
+    a#mg:hover, a#mg:active, a#to:hover, a#to:active, a#pi:hover, a#pi:active, a#go:hover, a#go:active, a#ms:hover, a#ms:active,
+    a#rr:hover, a#rr:active, a#rs:hover, a#rs:active, a#ro:hover, a#ro:active, a#ap:hover, a#ap:active, a#sp:hover, a#sp:active,
+    a#ce:hover, a#ce:active, a#pr:hover, a#pr:active, a#ac:hover, a#ac:active, a#sc:hover, a#sc:active, a#es:hover, a#es:active,
+    a#rj:hover, a#rj:active, a#pb:hover, a#pb:active, a#pe:hover, a#pe:active, a#rn:hover, a#rn:active, a#se:hover, a#se:active,
+    a#al:hover, a#al:active, a#df:hover, a#df:active
+    { display: block; background: url('/uploads/mapas/sprite.png') no-repeat; }
+
+    a#pa:hover, a#pa:active { background-position: -10px -0px; width: 188px; height: 187px; }
+    a#am:hover, a#am:active { background-position: -10px -197px; width: 258px; height: 181px; }
+    a#mt:hover, a#mt:active { background-position: -10px -388px; width: 166px; height: 161px; }
+    a#ba:hover, a#ba:active { background-position: -10px -559px; width: 136px; height: 148px; }
+    a#ma:hover, a#ma:active { background-position: -156px -559px; width: 102px; height: 139px; }
+    a#mg:hover, a#mg:active { background-position: -10px -717px; width: 163px; height: 131px; }
+    a#to:hover, a#to:active { background-position: -183px -717px; width: 74px; height: 125px; }
+    a#pi:hover, a#pi:active { background-position: -10px -858px; width: 83px; height: 124px; }
+    a#go:hover, a#go:active { background-position: -103px -858px; width: 108px; height: 108px; }
+    a#ms:hover, a#ms:active { background-position: -103px -976px; width: 106px; height: 104px; }
+    a#rr:hover, a#rr:active { background-position: -10px -992px; width: 87px; height: 103px; }
+    a#rs:hover, a#rs:active { background-position: -107px -1090px; width: 116px; height: 101px; }
+    a#ro:hover, a#ro:active { background-position: -10px -1201px; width: 104px; height: 87px; }
+    a#ap:hover, a#ap:active { background-position: -10px -1105px; width: 73px; height: 85px; }
+    a#sp:hover, a#sp:active { background-position: -124px -1201px; width: 131px; height: 84px; }
+    a#ce:hover, a#ce:active { background-position: -186px -388px; width: 61px; height: 76px; }
+    a#pr:hover, a#pr:active { background-position: -124px -1295px; width: 97px; height: 64px; }
+    a#ac:hover, a#ac:active { background-position: -10px -1298px; width: 108px; height: 62px; }
+    a#sc:hover, a#sc:active { background-position: -128px -1369px; width: 81px; height: 53px; }
+    a#es:hover, a#es:active { background-position: -208px -0px; width: 33px; height: 51px; }
+    a#rj:hover, a#rj:active { background-position: -186px -474px; width: 58px; height: 40px; }
+    a#pb:hover, a#pb:active { background-position: -10px -1370px; width: 59px; height: 35px; }
+    a#pe:hover, a#pe:active { background-position: -10px -1415px; width: 97px; height: 34px; }
+    a#rn:hover, a#rn:active { background-position: -186px -524px; width: 53px; height: 33px; }
+    a#se:hover, a#se:active { background-position: -208px -61px; width: 28px; height: 32px; }
+    a#al:hover, a#al:active { background-position: -208px -103px; width: 46px; height: 27px; }
+    a#df:hover, a#df:active { background-position: -208px -140px; width: 16px; height: 9px; }
+
+    ul#map li a img {border: 0; width: inherit; height: inherit;}
+</style>
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="titulo BARRA-LINKS">
+        <?php
+            $ufs = Default_Model_Lista_Estado::get();
+            foreach ($ufs as $key => $value) {
+                if($key > 0 && $key != 6 && $key < 29){
+                    echo '<a class="link" href="/brasil/territorio/' . mb_strtolower($value[0]) . '">' . $value[0] . '</a>';
+                }
+            }
+        ?>
+    </div>
+    
+    <div style="text-align: center; padding: 50px 0">
+        <center>
+            <ul id="map">
+                <li id="crs" estado="rs"><a href="/brasil/territorio/rs" id="rs" title="RS"></a></li>
+                <li id="csc" estado="sc"><a href="/brasil/territorio/sc" id="sc" title="SC"></a></li>
+                <li id="cpr" estado="pr"><a href="/brasil/territorio/pr" id="pr" title="PR"></a></li>
+                <li id="csp" estado="sp"><a href="/brasil/territorio/sp" id="sp" title="SP"></a></li>
+                <li id="cms" estado="ms"><a href="/brasil/territorio/ms" id="ms" title="MS"></a></li>
+                <li id="crj" estado="rj"><a href="/brasil/territorio/rj" id="rj" title="RJ"></a></li>
+                <li id="ces" estado="es"><a href="/brasil/territorio/es" id="es" title="ES"></a></li>
+                <li id="cmg" estado="mg"><a href="/brasil/territorio/mg" id="mg" title="MG"></a></li>
+                <li id="cgo" estado="go"><a href="/brasil/territorio/go" id="go" title="GO"></a></li>
+                <li id="cdf" estado="df"><a href="/brasil/territorio/df" id="df" title="DF"></a></li>
+                <li id="cba" estado="ba"><a href="/brasil/territorio/ba" id="ba" title="BA"></a></li>
+                <li id="cmt" estado="mt"><a href="/brasil/territorio/mt" id="mt" title="MT"></a></li>
+                <li id="cro" estado="ro"><a href="/brasil/territorio/ro" id="ro" title="RO"></a></li>
+                <li id="cac" estado="ac"><a href="/brasil/territorio/ac" id="ac" title="AC"></a></li>
+                <li id="cam" estado="am"><a href="/brasil/territorio/am" id="am" title="AM"></a></li>
+                <li id="crr" estado="rr"><a href="/brasil/territorio/rr" id="rr" title="RR"></a></li>
+                <li id="cpa" estado="pa"><a href="/brasil/territorio/pa" id="pa" title="PA"></a></li>
+                <li id="cap" estado="ap"><a href="/brasil/territorio/ap" id="ap" title="AP"></a></li>
+                <li id="cma" estado="ma"><a href="/brasil/territorio/ma" id="ma" title="MA"></a></li>
+                <li id="cto" estado="to"><a href="/brasil/territorio/to" id="to" title="TO"></a></li>
+                <li id="cse" estado="se"><a href="/brasil/territorio/se" id="se" title="SE"></a></li>
+                <li id="cal" estado="al"><a href="/brasil/territorio/al" id="al" title="AL"></a></li>
+                <li id="cpe" estado="pe"><a href="/brasil/territorio/pe" id="pe" title="PE"></a></li>
+                <li id="cpb" estado="pb"><a href="/brasil/territorio/pb" id="pb" title="PB"></a></li>
+                <li id="crn" estado="rn"><a href="/brasil/territorio/rn" id="rn" title="RN"></a></li>
+                <li id="cce" estado="ce"><a href="/brasil/territorio/ce" id="ce" title="CE"></a></li>
+                <li id="cpi" estado="pi"><a href="/brasil/territorio/pi" id="pi" title="PI"></a></li>
+            </ul>
+        </center>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/brasil/territorio' ?>" data-lang="en" data-text="Território Brasileiro" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/brasil/territorio' ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/brasil/territorio' ?>"></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/brasil/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

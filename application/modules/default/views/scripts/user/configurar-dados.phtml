@@ -1,0 +1,209 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME . ' - ' . ucfirst(Zend_Auth::getInstance()->getIdentity()->user_apelido) ?> - Configurar Dados</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/com-formulario.css" />
+<script type="text/javascript" language="javascript" src="/scripts/alex/campo.js"></script>
+<script type="text/javascript" language="javascript" src="/scripts/alex/filtro.js"></script>
+<script type="text/javascript" language="javascript">
+    function salvar(){
+        return;
+        erro = 0;
+        f = document.formulario;
+        if(f.user_apelido.value.length < 2){
+            marcaCampoErro(f.user_apelido); erro++;
+        }
+        if(f.user_nome.value.length < 2){
+            marcaCampoErro(f.user_nome); erro++;
+        }
+        if(!(f.user_data_dia.value > 0)){
+            marcaCampoErro(f.user_data_dia); erro++;
+        }
+        if(!(f.user_data_mes.value > 0)){
+            marcaCampoErro(f.user_data_mes); erro++;
+        }
+        if(!(f.user_data_ano.value > 0)){
+            marcaCampoErro(f.user_data_ano); erro++;
+        }
+        if(!(f.user_sexo_id.value > 0)){
+            marcaCampoErro(f.user_sexo_id); erro++;
+        }
+        if(f.user_senha.value.length < 6){
+            marcaCampoErro(f.user_senha); erro++;
+        }
+        if(erro == 0){
+            f.user_data_nascimento.value = f.user_data_ano.value+'-'+f.user_data_mes.value+'-'+f.user_data_dia.value;
+            f.submit();
+        }
+    }
+</script>
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER" style="background-image: url('/temas/default/default/fundos/fundoPainelIdCard.png');">
+    <div class="TEXTO">
+        <div class="p simples">
+            Abaixo você encontrará o formulário completo com todos os dados básicos sobre você
+            e sua conta. Alguns desses dados são essenciais, já outros são opcionais. Para que 
+            possamos lhe oferecer sempre a melhorar experiência precisamos ter informações atualizadas
+            sobre você e suas preferências e por isso recomendamos que sempre que possível mantenha
+            atualize estes dados.
+        </div>
+    </div>
+    <form class="FORMULARIO" name="formulario" action="/user/configurar-dados" method="post">
+        <center>
+            <table class="tabela">
+                <tr><th>E-mail
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Este é o endereço de e-mail associado a sua conta, ele não poderá ser alterado.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input disabled readonly value="<?php echo $this->obj['user_email'] ?>" type="text" class="Text" ></td>
+                </tr>
+
+                <tr><th class="opcoes" colspan="2"></th></tr>
+                <tr><th>Apelido
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Escreva neste campo o apelido pelo qual as pessoas lhe conhecerão.</div>
+                                    <div class="topico">Ex: fred.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input disabled onclick="desmarcaCampo(this)" value="<?php echo $this->obj['user_apelido'] ?>" name="user_apelido" maxlength="20" autocomplete="off" type="text" class="Text" ></td>
+                </tr>
+                <tr><th>Nome
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Escreva neste campo o seu nome completo.</div>
+                                    <div class="topico">Ex: Frederico Oliveira Barreto.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input disabled onclick="desmarcaCampo(this)" value="<?php echo $this->obj['user_nome'] ?>" name="user_nome" maxlength="200" autocomplete="off" type="text" class="Text" ></td>
+                </tr>
+                <tr><th>Data de Nascimento
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Escreva neste campo a sua data de nascimento.</div>
+                                    <div class="topico">Ex: 17/11/1989.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input disabled name="user_data_nascimento" autocomplete="off" type="hidden" readonly >
+                        <select disabled onclick="desmarcaCampo(this)" name="user_data_dia" style="width: 100px">
+                            <option value="0"></option>
+                            <?php
+                            if(isset($this->obj['user_data_nascimento']) && strlen($this->obj['user_data_nascimento']) == 10){
+                                $dataParts = explode('-', $this->obj['user_data_nascimento']);
+                            }else{
+                                $dataParts = array('', '', '');
+                            }
+                            for($i=1; $i<32; $i++) {
+                                echo '<option value="' . $i . '"';
+                                if($i == $dataParts[2]){
+                                    echo ' selected';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <select disabled onclick="desmarcaCampo(this)" name="user_data_mes" style="width: 164px">
+                            <option value="0"></option>
+                            <?php
+                            for($i=1; $i<13; $i++) {
+                                echo '<option value="' . $i . '"';
+                                if($i == $dataParts[1]){
+                                    echo ' selected';
+                                }
+                                echo '>' . Alex_Util::mes($i) . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <select disabled onclick="desmarcaCampo(this)" name="user_data_ano" style="width: 100px">
+                            <option value="0"></option>
+                            <?php
+                            for($i=date('Y'); $i>date('Y')-130; $i--) {
+                                echo '<option value="' . $i . '"';
+                                if($i == $dataParts[0]){
+                                    echo ' selected';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr><th>Sexo
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Selecione o seu sexo.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><select disabled onclick="desmarcaCampo(this)" name="user_sexo_id" >
+                            <option value="0"></option>
+                            <?php
+                            foreach (Default_Model_Lista_Sexo::get() as $key => $value) {
+                                echo '<option value="' . $key . '"';
+                                if($key == $this->obj['user_sexo_id']){
+                                    echo ' selected';
+                                }
+                                echo '>' . $value . '</option>';
+                            }
+                            ?>
+                        </select></td>
+                </tr>
+
+                <tr><th class="opcoes" colspan="2"></th></tr>
+                <tr><th>Senha
+                        <div class="DICA-ICONE">
+                            <div class="DICA">
+                                <div class="corpo">
+                                    <div class="topico">Campo obrigatório.</div>
+                                    <div class="texto">Para que as alterações sejam confimadas você deve escrever aqui a sua senha atual.</div>
+                                </div>
+                                <div class="seta"></div>
+                            </div>
+                        </div>
+                    </th>
+                    <td><input disabled onclick="desmarcaCampo(this)" name="user_senha" maxlength="20" autocomplete="off" type="password" class="Text" ></td>
+                </tr>
+
+                <tr><th class="opcoes" colspan="2">
+                        <a class="alex-bt destaque verde-minimo" href="#" onclick="salvar()">Salvar</a>
+                        <input readonly value="<?php echo $this->obj['user_tipo_id'] ?>" name="user_tipo_id" type="hidden" >
+                        <input readonly value="<?php echo $this->obj['user_status'] ?>" name="user_status" type="hidden" >
+                    </th>
+                </tr>
+            </table>
+        </center>
+    </form>
+</div>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/user/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

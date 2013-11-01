@@ -1,0 +1,63 @@
+<?php
+if($_SERVER['SERVER_ADDR'] != '127.0.0.1'){
+    $this->placeholder('Head')->captureStart();
+    echo '<title>' . DFL_NOME . ' - Registro de Exceção' . DFL_NOME . '</title>';
+    $this->placeholder('Head')->captureEnd();
+    ?>
+    <div class="CONTEINER">
+        <div class="TEXTO" style="padding: 40px">
+            <h2><?php echo $this->message ?></h2><br/>
+            <h7>Registramos todas as informações sobre esta exceção e assim que possível criaremos uma solução.</h7>
+            <br/><br/><h4>Desculpe pelo transtorno.</h4><br/><br/>
+            <?php
+            if (isset($this->exception)){
+                $time = time();
+                $microtime = explode(' ', substr(microtime(), 2));
+                echo '<font style="color: #fff; font-size: 9px;">' . $time . '.' . $microtime[0] . '</font>';
+
+                $log = fopen(APPLICATION_PATH . '/../logs/' . $time . '.' . $microtime[0] . '.log', 'a');
+                fwrite($log, 'Hora......: ' . date('H:i:s') . "\n");
+                fwrite($log, 'Data......: ' . date('d-m-Y') . "\n");
+                fwrite($log, 'Mensagem..: ' . $this->exception->getMessage() . "\n");
+                fwrite($log, 'Módulo....: ' . $this->request->getParam('module') . "\n");
+                fwrite($log, 'Versão....: 1.0 Beta' . "\n");
+                fwrite($log, 'Arquivo...: ' . $this->exception->getFile() . "\n");
+                fwrite($log, 'Linha.....: ' . $this->exception->getLine() . "\n");
+                fwrite($log, 'Codigo....: ' . $this->exception->getCode());
+
+                fwrite($log, "\n\nPARÂMETROS DA REQUISIÇÃO:\n");
+                    ob_start();
+                    echo var_export($this->request->getParams(), true);
+                    $tmp = ob_get_contents();
+                    ob_end_clean();
+                fwrite($log, $tmp);
+
+                fwrite($log, "\n\nRASTREAMENTO:\n");
+                    ob_start();
+                    echo $this->exception->getTraceAsString();
+                    $tmp = ob_get_contents();
+                    ob_end_clean();
+                fwrite($log, $tmp);
+
+                fwrite($log, "\n\nCACHE:\n");
+                    ob_start();
+                    //print_r($this->exception->getTrace())
+                    $tmp = ob_get_contents();
+                    ob_end_clean();
+                fwrite($log, $tmp);
+
+                fclose($log);
+            }
+
+            $this->placeholder('ConteudoEsquerda')->captureStart();
+            include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+            $this->placeholder('ConteudoEsquerda')->captureEnd();
+            ?>
+        </div>
+    </div>
+    <?php
+}else{
+    require 'local.phtml';
+}
+?>
+

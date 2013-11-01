@@ -1,0 +1,38 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Partidos - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="RESULTADO" id="RESULTADO">
+    <?php include APPLICATION_PATH . '/modules/default/views/scripts/partidos/ajax-paginacao.phtml' ?>
+</div>
+
+<script type="text/javascript" language="javascript">
+    var jQPaginaStatus = 0;
+    var jQPaginaAtual = <?php echo $this->Lista['pagina']['atual'] ?>;
+    var jQPaginaFinal = <?php echo $this->Lista['pagina']['fim'] ?>;
+    
+    $(window).bind("scroll", function(){
+        page = $('#CONTEUDO').height() + 200;
+        if(($(window).scrollTop() + $(window).height() + 500) > page){
+            if(jQPaginaStatus == 0 && jQPaginaAtual < jQPaginaFinal){
+                jQPaginaStatus = 1;
+                $.post('/partidos/ajax-paginacao/id/0', {
+                    'pagina': ++jQPaginaAtual
+                }, function(data){
+                    jQPaginaStatus = 0;
+                    document.getElementById('RESULTADO').innerHTML += data.toString();
+                }, 'html');
+            }
+        }
+    });
+</script>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

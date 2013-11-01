@@ -1,0 +1,60 @@
+<?php
+$projs = Zend_Registry::get('db')->fetchAll('
+    SELECT * FROM pro_projeto P, pro_situacao S, pro_tipo_lei T
+    WHERE P.projeto_situacao_id=S.situacao_id && P.projeto_tplei_id=T.tplei_id ' . ((Zend_Auth::getInstance()->hasIdentity())?('&& P.projeto_id NOT IN ( SELECT projeto_id FROM pro_projeto_x_usuario WHERE user_id=' . Zend_Auth::getInstance()->getIdentity()->user_id . ' )'):('')) . '
+    ORDER BY projeto_data_apresentacao DESC LIMIT 0, 1
+');
+if(count($projs) > 0){
+    foreach ($projs as $obj) {
+        echo '<div class="MINIATURA PROJETO">';
+            echo '<a class="apelido" href="/projetos/' . $obj['projeto_url'] . '"  title="Nome.............: ' . $obj['projeto_nome'] . '&#13;Apresentação: ' . date('d-m-Y', $obj['projeto_data_apresentacao']) . '&#13;Tipo................: ' . $obj['tplei_nome'] . '&#13;Situação.........: ' . $obj['situacao_nome'] . '">' . $obj['projeto_nome'] . '</a>';
+
+            echo '<div class="estatistica" id="estatisticaProjeto' . $obj['projeto_id'] . '">';
+                echo '<div class="votacao" title="Votos SIM....: ' . $obj['projeto_qtd_positivos'] . '&#13;Votos NÃO..: ' . $obj['projeto_qtd_negativos'] . '">';
+                    echo '<div class="barra">';
+                        $total = $obj['projeto_qtd_positivos']+$obj['projeto_qtd_negativos'];
+                        if($total>0){
+                            $s = (100*$obj['projeto_qtd_positivos'])/$total;
+                            $n = (100*$obj['projeto_qtd_negativos'])/$total;
+                            if($obj['projeto_qtd_positivos']>=$obj['projeto_qtd_negativos']){
+                                echo '<div class="sim" style="width: '.$s.'%"><div class="indice">' . ceil($s) . '%</div></div><div class="nao" style="width: '.$n.'%"></div>';
+                            }else{
+                                echo '<div class="sim" style="width: '.$s.'%"></div><div class="nao" style="width: '.$n.'%"><div class="indice">' . ceil($n) . '%</div></div>';
+                            }
+                        }else{
+                            echo '<div class="indice">0%</div>';
+                        }
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
+
+            echo '<div class="texto">';
+                if($obj['projeto_descricao']!=''){
+                    echo '<div class="nome">Descrição</div>';
+                    echo '<div class="descricao scroll" onmouseout="$(this).animate({scrollTop: 0}, 400);">' . $obj['projeto_descricao'] . '</div>';
+                }else{
+                    echo '<div class="nome">Ementa</div>';
+                    echo '<div class="descricao scroll" onmouseout="$(this).animate({scrollTop: 0}, 400);">' . $obj['projeto_ementa'] . '</div>';
+                }
+            echo '</div>';
+            
+            echo '<div class="urna">';
+                echo '<div class="ps"><a href="/projetos/' . $obj['projeto_url'] . '">SAIBA MAIS ANTES TE VOTAR</a></div>';
+                echo '<div class="botoes" id="urnaProjeto' . $obj['projeto_id'] . '"><div>';
+                    echo '<div><a class="sim" onclick="ajaxProjetosVotarSim(' . $obj['projeto_id'] . ')">SIM</a></div>';
+                    echo '<div><a class="nao" onclick="ajaxProjetosVotarNao(' . $obj['projeto_id'] . ')">NÃO</a></div>';
+                echo '</div></div>';
+            echo '</div>';
+
+            echo '<div class="opcoes">';
+                echo '<a href="/projetos/' . $obj['projeto_url'] . '" title="Detalhar Projeto" style="background-image: url(\'/temas/default/default/icones/zoom_in.png\');"></a>';
+                //echo '<a href="" title="" style="background-image: url(\'/temas/default/default/icones/map_blue.png\');"></a>';
+                //echo '<a href="" title="" style="background-image: url(\'/temas/default/default/icones/email.png\');"></a>';
+                //echo '<a href="" title="" style="background-image: url(\'/temas/default/default/icones/pie_chart.png\');"></a>';
+                //echo '<a href="" title="" style="background-image: url(\'/temas/default/default/icones/comment.png\');"></a>';
+                //echo '<a href="" title="" style="background-image: url(\'/temas/default/default/icones/megaphone.png\');"></a>';
+            echo '</div>';
+        echo '</div>';
+    }
+}
+?>

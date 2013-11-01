@@ -1,0 +1,11 @@
+<?php
+foreach ($this->Lista['resultado'] as $obj) {
+    echo '<div class="MINIATURA">';
+        echo '<a class="foto" href="/dossies/' . $obj['pessoa_url'] . '" style="' . (($obj['pessoa_flags'][4]==1)?('background-image: url(\'/dossies/ajax-foto/id/' . $obj['pessoa_id'] . '\');'):('')) . '"></a>';
+        echo '<div class="texto">';
+            echo '<div class="nome">' . $obj['pessoa_apelido'] . '</div>';
+            echo '<div class="descricao">' . $obj['pessoa_nome'] . '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+?>

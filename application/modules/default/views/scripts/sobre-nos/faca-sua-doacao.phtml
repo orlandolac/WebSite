@@ -1,0 +1,29 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME ?> - Sobre nós - Faça sua DOAÇÃO !</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <div class="topico">Página...</div>
+        <div class="p">
+            ... em contrução.
+        </div>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/sobre-nos/faca-sua-doacao' ?>" data-send="false" data-layout="box_count" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-href="<?php echo DFL_URL . '/sobre-nos/faca-sua-doacao' ?>" data-size="tall" ></div><br/>
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/sobre-nos/faca-sua-doacao' ?>" data-lang="en" data-text="Faca sua DOAÇÃO ! (<?php echo DFL_URL ?>)" data-dnt="true" data-count="vertical"></a><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

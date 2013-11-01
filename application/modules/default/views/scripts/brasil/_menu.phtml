@@ -1,0 +1,15 @@
+<div class="MINIATURA">
+    <a class="foto" style="background-image: url('/uploads/mapas/br.png');" href="/brasil/territorio"></a>
+    <div class="texto">
+        <div class="nome">BR</div>
+        <div class="descricao">Brasil</div>
+    </div>
+    <div class="menu">
+        <?php
+        $action = explode('/', $_SERVER['REQUEST_URI'] . '/');
+        $action = $action[2];
+        ?>
+        <a class="op <?php echo ($action == 'territorio')?('opAtivo'):('')?>" href="/brasil" title="Território">Território</a>
+        <a class="op <?php echo ($action == 'leis')?('opAtivo'):('')?>" href="/brasil/leis" title="Leis">Leis<img src="/temas/default/default/icones/page.png" /></a>
+    </div>
+</div>

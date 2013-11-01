@@ -1,0 +1,130 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Candidaturas - <?php echo $this->obj['pessoa_nome'] . ' - Dossiês - ' . DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->obj['pessoa_cpf'] . ', ' . $this->obj['pessoa_titulo_eleitor'] . ', ' . $this->obj['pessoa_nome'] ?>" />
+<meta name="description" content="<?php echo $this->obj['pessoa_nome'] ?>" />
+<link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/com-tabela.css" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<?php
+$db = Zend_Registry::get('db');
+$res = $db->fetchAll('
+    SELECT * FROM pu_candidatura C, pu_partido P, pu_municipio M, pu_candidatura_detalhe D, pu_ocupacao O
+    WHERE C.cand_pessoa_id=' . $this->obj['pessoa_id'] . '
+       && C.cand_partido_id=P.partido_id
+       && C.cand_municipio_id=M.municipio_id
+       && C.cand_id=D.cand_id
+       && D.cand_ocupacao_id=O.ocupacao_id
+    ORDER BY C.cand_eleicao_id DESC, C.cand_status_total_id
+');
+if($res){
+    echo '<div class="RESULTADO">';
+        foreach ($res as $cand) {
+            $uf = Default_Model_Lista_Estado::get($cand['cand_estado_id']);
+            $vice = false;
+            if($cand['cand_cargo_id']<5 || $cand['cand_cargo_id']==11 || $cand['cand_cargo_id']==12){
+                $vice = true;
+            }
+            ?>
+            <div class="MINIATURA TABELA">
+                <table class="tabela detalhe">
+                    <tr>
+                        <td width="40px" rowspan="<?php echo ($vice)?('7'):('6')?>" style="text-align: center"><sub style="padding-bottom: 5px">Ano</sub>
+                            <div class="ANO">
+                                <?php echo $cand['cand_eleicao_id'] ?>
+                            </div>
+                        </td>
+                        <td colspan="3" style="padding-left: 53px; background-image: url('/uploads/partidos/<?php echo $cand['partido_id']?>/foto.png'); background-size: auto 100%; background-position: left center; background-repeat: no-repeat;">
+                            <sub>Partido</sub>
+                            <?php
+                                echo $cand['partido_sigla'] . ', ' . $cand['partido_nome'];
+                                if($cand['cand_legenda_id'] > 0){
+                                    echo '<sub style="margin-top: 2px">Coligação</sub>';
+                                    echo $cand['partido_sigla'] . ' - ' . $cand['partido_nome'];
+                                }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <sub>Legenda</sub>
+                             
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><sub>Cargo</sub><?php echo Default_Model_Lista_Cargo::get($cand['cand_cargo_id']) . '<comp>, ' . (($cand['cand_cargo_id'] > 10)?($cand['municipio_nome'] . ', ' . $uf[0]):($uf[1])) . '</comp>' ?></td>
+                        <td><sub>Despesa Máx. Campanha</sub><?php echo ($cand['cand_total_verba'] > 0)?('R$ ' . number_format($cand['cand_total_verba'], 2, ',', '.')):(' ') ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><sub>Número, Candidato<obs><?php echo $cand['cand_idade'] ?> anos</obs></sub><?php echo $cand['cand_urna_numero'] . ', ' . $cand['cand_urna_nome'] ?></td>
+                        <td><sub>Patrimônio Declarado</sub><?php echo ($cand['cand_total_patrimonio'] > 0)?('R$ ' . number_format($cand['cand_total_patrimonio'], 2, ',', '.')):(' ') ?></td>
+                    </tr>
+                    <?php
+                    if($vice){
+                        ?>
+                        <tr>
+                            <td colspan="2"><sub>Vice</sub> </td>
+                            <td><sub>Patrimônio Declarado</sub></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    <tr>
+                        <td width="200px"><sub>Escolaridade</sub><?php echo Default_Model_Lista_Escolaridade::get($cand['cand_escolaridade_id']) ?></td>
+                        <td width="200px"><sub>Estado Civil</sub><?php echo Default_Model_Lista_EstadoCivil::get($cand['cand_estado_civil_id']) ?></td>
+                        <td width="200px"><sub>Status Candidatura</sub><?php echo Default_Model_Lista_SituacaoCandidatura::get($cand['cand_status_cand_id']) ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><sub>Ocupação</sub><?php echo $cand['ocupacao_nome'] ?></td>
+                        <td><sub>Status Totalização</sub><?php echo Default_Model_Lista_SituacaoTotalizacao::get($cand['cand_status_total_id']) ?></td>
+                    </tr>
+                </table>
+                <div class="texto">
+                    <div class="ps">* Dados coletados do Tribunal Superior Eleitoral.</div>
+                </div>
+            </div>
+            <?php
+        }
+    echo '</div>';
+}else{
+    ?>
+    <div class="CONTEINER">
+        <div class="TEXTO">
+            <div class="topico">NENHUMA CANDIDATURA FOI ENCONTRADA.</div>
+            <div class="p">
+                <b>°PovoUnido.com</b> coleta todas as candidaturas publicadas pelo TSE desde 1994,
+                no entanto nem mesmo o TSE tem informações detalhadas sobre eleições muito antigas e
+                por isso o projeto também pode incluir, por conta própria, dados históricos que sejam
+                confirmados.
+            </div>
+            <div class="p">
+                <b>°PovoUnido.com</b> formará dossiês sobre qualquer cidadão de carreira pública ou
+                que possua relações, com os governos, que os outros cidadãos precisam conhecer. Logo,
+                o projeto não se limitará aos candidatos das eleições brasileiras.
+            </div>
+            <div class="p">
+                Se este cidadão não tem nenhuma candidatura relacionada isso se deve a um três motivos abaixo:
+                <ul style="margin: 10px 10px 10px -7px">
+                    <li><b>-</b> A candidatura é antiga e o TSE não possui registros;</li>
+                    <li><b>-</b> O Projeto ainda não confirmou as eleições muito antigas que ele possa ter participado;</li>
+                    <li><b>-</b> Este cidadão nunca se candidatou as eleições, em nenhum cargo;</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+$this->placeholder('ConteudoSocialize')->captureStart();
+?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/candidaturas' ?>" data-lang="en" data-text="Candidaturas (<?php echo $this->obj['pessoa_apelido'] ?>)" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/candidaturas' ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/candidaturas' ?>"></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/dossies/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

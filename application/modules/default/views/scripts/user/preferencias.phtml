@@ -1,0 +1,227 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME . ' - ' . ucfirst(Zend_Auth::getInstance()->getIdentity()->user_apelido) ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<style>
+    .FORM{
+        padding: 10px;
+    }
+    .FORM .enunciado{
+        margin-bottom: 10px;
+    }
+    .FORM .botoes .alex-bt .DICA{
+        margin:5px 0 0 -13px;
+    }
+    .FORM .botoes .alex-bt:hover .DICA{
+        opacity:1;
+        visibility:visible;
+        transition:all 0.2s linear 0.5s;
+    }
+    .FORM .lista{
+        display: table;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    .FORM .lista label{
+        width: 231px;
+        display: inline-block;
+        padding: 3px 5px 3px 0;
+        margin: 1px;
+        cursor: pointer;
+        background: #f1f1f1;
+    }
+    .FORM .lista label:hover{
+        background: #fafafa;
+    }
+</style>
+
+<form name="formPreferLocalizacao" method="post" action="" class="CONTEINER">
+    <input type="hidden" name="secao" value="localizacao" />
+    <div class="titulo">LOCALIZAÇÃO</div>
+    <div class="FORM">
+        <div class="enunciado">
+            <?php echo 'ATUAL<b> = ' . mb_strtoupper((is_array($this->regiao))?($this->regiao['estado_nome'] . ', ' . $this->regiao['municipio_nome']):('SEM LOCALIZAÇÃO')) . '</b>' ?>
+        </div>
+        <div class="enunciado">
+            Selecione outra LOCALIZAÇÃO padrão:
+        </div>
+        <div class="lista">
+            <div class="FILTRO" style="padding:0; margin: 0; background: none;">
+                <select class="item" name="estado" onchange="carregarAjaxOculto('/index/ajax-municipios/estado/' + this.value, 'MUNICIPIOS')" style="margin-left: 0">
+                    <option value="0" class="label">Estados</option>
+                    <?php
+                    foreach (Default_Model_Lista_Estado::get() as $key => $value) {
+                        if($key > 0 && $key < 29 && $key != 6){
+                            echo '<option value="' . $key . '">' . $value[0] . ' - ' . $value[1] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+                <select class="item" name="municipio" id="MUNICIPIOS">
+                    <option value="0" class="label">Municípios</option>
+                </select>
+            </div>
+        </div>
+        <div class="botoes">
+            <div class="alex-bt" style="background-image: url('/temas/default/default/icones/help.png')"> 
+                <div class="DICA">
+                    <div class="corpo">
+                        <div class="topico">Sobre a Localização</div>
+                        <div class="texto">
+                            Sabendo sua "Localização" aproximada o sistema será capaz de apresentar
+                            um conteúdo mais relevante para você, filtrando projetos, notícias e
+                            políticos que não são relacionados a sua região, por exemplo.
+                        </div>
+                    </div>
+                    <div class="seta"></div>
+                </div>
+            </div>
+            <a class="alex-bt" onclick="document.formPreferLocalizacao.submit()">SALVAR<img src="/temas/default/default/icones/accept.png" /></a>
+        </div>
+    </div>
+</form>
+
+<form name="formPreferTemas" method="post" action="" class="CONTEINER">
+    <input type="hidden" name="secao" value="temas" />
+    <div class="titulo">TEMAS</div>
+    <div class="FORM">
+        <div class="enunciado">
+            Selecione os CINCO temas mais IMPORTANTES para você:
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM pro_tema ORDER BY tema_nome') as $value) {
+                echo '<label><input type="checkbox" ' . ((isset($this->temas[$value['tema_id']]))?('checked="true"'):('')) . ' name="temas[]" value="' . $value['tema_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['tema_nome'] . '</b></label>';
+            }
+            echo '<label><input type="checkbox" name="temas[]" value="0" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">Outros</b></label>';
+            ?>
+        </div>
+        <div class="botoes">
+            <div class="alex-bt" style="background-image: url('/temas/default/default/icones/help.png')"> 
+                <div class="DICA">
+                    <div class="corpo">
+                        <div class="topico">Sobre os Temas</div>
+                        <div class="texto">
+                            Escolher até CINCO temas que você considera ter maior importância para a
+                            sociedade no momento.
+                        </div>
+                        <div class="texto">
+                            Os temas considerados mais importantes pelos usuários afetarão diretamente
+                            as pontuações dos políticos no ranking. Sendo assim projetos relacionados
+                            a temas importantes terão gratificações e punições maiores.
+                        </div>
+                    </div>
+                    <div class="seta"></div>
+                </div>
+            </div>
+            <a class="alex-bt" onclick="document.formPreferTemas.submit()">SALVAR<img src="/temas/default/default/icones/accept.png" /></a>
+        </div>
+    </div>
+</form>
+
+<form name="formPreferProjetos" method="post" action="" class="CONTEINER">
+    <input type="hidden" name="secao" value="projetos" />
+    <div class="titulo">PROJETOS</div>
+    <div class="FORM">
+        <div class="enunciado">
+            Selecione os REGIMES de projetos que você deseja REMOVER de seus resultados.
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM pro_regime ORDER BY regime_grupo_id, regime_nome') as $value) {
+                echo '<label title="' . $value['regime_descricao'] . '"><input type="checkbox" ' . ((isset($this->regimes[$value['regime_id']]))?('checked="true"'):('')) . ' name="regimes[]" value="' . $value['regime_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['regime_nome'] . '</b></label>';
+            }
+            ?>
+        </div>
+        
+        <div class="enunciado">
+            Selecione os TIPOS de projetos que você deseja REMOVER de seus resultados.
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM pro_tipo_lei ORDER BY tplei_grupo_id, tplei_sigla, tplei_nome') as $value) {
+                echo '<label style="width: 707px" title="' . $value['tplei_descricao'] . '"><input type="checkbox" ' . ((isset($this->tipos[$value['tplei_id']]))?('checked="true"'):('')) . ' name="tipos[]" value="' . $value['tplei_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['tplei_sigla'] . ' - ' . $value['tplei_nome'] . '</b></label>';
+            }
+            ?>
+        </div>
+        
+        <div class="enunciado">
+            Selecione as APRECIAÇÕES de projetos que você deseja REMOVER de seus resultados.
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM pro_apreciacao ORDER BY apreciacao_grupo_id, apreciacao_nome') as $value) {
+                echo '<label style="width: 707px" title="' . $value['apreciacao_descricao'] . '"><input type="checkbox" ' . ((isset($this->apreciacoes[$value['apreciacao_id']]))?('checked="true"'):('')) . ' name="apreciacoes[]" value="' . $value['apreciacao_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['apreciacao_nome'] . '</b></label>';
+            }
+            ?>
+        </div>
+        
+        <div class="enunciado">
+            Selecione as SITUAÇÕES de projetos que você deseja REMOVER de seus resultados.
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM pro_situacao ORDER BY situacao_grupo_id, situacao_nome') as $value) {
+                echo '<label style="width: 350px" title="' . $value['situacao_descricao'] . '"><input type="checkbox" ' . ((isset($this->situacoes[$value['situacao_id']]))?('checked="true"'):('')) . ' name="situacoes[]" value="' . $value['situacao_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['situacao_nome'] . '</b></label>';
+            }
+            ?>
+        </div>
+        
+        <div class="botoes">
+            <div class="alex-bt" style="background-image: url('/temas/default/default/icones/help.png')"> 
+                <div class="DICA">
+                    <div class="corpo">
+                        <div class="topico">Sobre os Projetos</div>
+                        <div class="texto">
+                            As categorias (Apreciação; Regime; Tipo; Situação) que você selecionar
+                            não aparecerão nos resultados das suas buscas na página de Projetos, a
+                            menos que você indique que deseja vê-las.
+                        </div>
+                    </div>
+                    <div class="seta"></div>
+                </div>
+            </div>
+            <a class="alex-bt" onclick="document.formPreferProjetos.submit()">SALVAR<img src="/temas/default/default/icones/accept.png" /></a>
+        </div>
+    </div>
+</form>
+
+<form name="formPreferNoticias" method="post" action="" class="CONTEINER">
+    <input type="hidden" name="secao" value="noticias" />
+    <div class="titulo">NOTÍCIAS</div>
+    <div class="FORM">
+        <div class="enunciado">
+            Selecione os VEÍCULOS que você deseja REMOVER de seus resultados.
+        </div>
+        <div class="lista">
+            <?php
+            foreach (Zend_Registry::get('db')->fetchAll('SELECT * FROM not_veiculo WHERE veiculo_id>0 ORDER BY veiculo_nome') as $value) {
+                echo '<label><input type="checkbox" ' . ((isset($this->veiculos[$value['veiculo_id']]))?('checked="true"'):('')) . ' name="veiculos[]" value="' . $value['veiculo_id'] . '" style="vertical-align: top" /><b style="display: inline-block; padding: 2px 0 0 2px;">' . $value['veiculo_nome'] . '</b></label>';
+            }
+            ?>
+        </div>
+        <div class="botoes">
+            <div class="alex-bt" style="background-image: url('/temas/default/default/icones/help.png')"> 
+                <div class="DICA">
+                    <div class="corpo">
+                        <div class="topico">Sobre as Notícias</div>
+                        <div class="texto">
+                            Os veículos que você selecionar não aparecerão nos resultados das suas
+                            buscas na página de Notícias, a menos que você indique que deseja vê-las.
+                        </div>
+                    </div>
+                    <div class="seta"></div>
+                </div>
+            </div>
+            <a class="alex-bt" onclick="document.formPreferNoticias.submit()">SALVAR<img src="/temas/default/default/icones/accept.png" /></a>
+        </div>
+    </div>
+</form>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/user/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

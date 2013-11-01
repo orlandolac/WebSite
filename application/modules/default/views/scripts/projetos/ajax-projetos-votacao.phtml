@@ -1,0 +1,67 @@
+<?php
+if(isset($this->votacoes)){
+    foreach ($this->votacoes as $votacao) {
+        echo '<div class="TEXTO">';
+            echo '<div class="topico">' . $votacao['@attributes']['ObjVotacao'] . '</div>';
+            echo '<div class="p">' . $votacao['@attributes']['Resumo'] . '</div>';
+        echo '</div>';
+        
+        $sim = $nao = $sem = array();
+        foreach ($votacao['votos']['Deputado'] as $voto) {
+            if($voto['@attributes']['Voto'] == 'Sim'){
+                $sim[$voto['@attributes']['Partido']][] = $voto['@attributes'];
+            }elseif($voto['@attributes']['Voto'] == 'Não'){
+                $nao[$voto['@attributes']['Partido']][] = $voto['@attributes'];
+            }else{
+                $sem[$voto['@attributes']['Partido']][] = $voto['@attributes'];
+            }
+        }
+        echo '<div class="tabVotacao">';
+            echo '<div class="votoGrupo" style="background:#efe;width:50%">';
+                echo '<div class="votoTitulo" style="background: #cdc">VOTARAM SIM</div>';
+                echo '<div class="votoLista votoListaSim">';
+                foreach ($sim as $partido => $itens) {
+                    echo '<div class="lstGrupo">' . $partido . '</div>';
+                    foreach ($itens as $item) {
+                        echo '<div class="item" title="' . $item['Nome'] . ' ' . $item['Partido'] . '/' . $item['UF'] . ' > ' . mb_strtoupper($item['Voto']) . '">' . $item['Nome'] . '</div>';
+                    }
+                }
+                echo '</div>';
+            echo '</div>';
+            echo '<div class="votoGrupo" style="background:#fee">';
+                echo '<div class="votoTitulo" style="background: #dcc">VOTARAM NÃO</div>';
+                echo '<div class="votoLista votoListaNao">';
+                foreach ($nao as $partido => $itens) {
+                    echo '<div class="lstGrupo">' . $partido . '</div>';
+                    sort($item);
+                    foreach ($itens as $item) {
+                        echo '<div class="item" title="' . $item['Nome'] . ' ' . $item['Partido'] . '/' . $item['UF'] . ' > ' . mb_strtoupper($item['Voto']) . '">' . $item['Nome'] . '</div>';
+                    }
+                }
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+        echo '<div class="tabVotacao">';
+            echo '<div class="votoGrupo">';
+                echo '<div class="votoTitulo">NÃO VOTOU</div>';
+                echo '<div class="votoLista">';
+                foreach ($sem as $partido => $itens) {
+                    echo '<div class="lstGrupo">' . $partido . '</div>';
+                    foreach ($itens as $item) {
+                        echo '<div class="item" title="' . $item['Nome'] . ' ' . $item['Partido'] . '/' . $item['UF'] . ' > ' . mb_strtoupper($item['Voto']) . '">' . $item['Nome'] . '</div>';
+                    }
+                }
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
+}
+?>
+
+
+<script>
+    $('tabVotacao').css({
+        'display': 'none'
+    });
+</script>
+    

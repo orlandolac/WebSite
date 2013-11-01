@@ -1,0 +1,57 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo DFL_NOME ?> - Sobre nós - Como AJUDAR ?</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <div class="topico">COMO AJUDAR</div>
+        <div class="p">
+            Você pode contribuir com este projeto de diversas maneiras diferentesSiga e nós estamos contando com a sua ajudar. Divulgue esta ideia nas redes sociais em que você faz parte, convide seus contatos para conhecer e participar deste projeto. <b>Curta</b>, <b>Compartilhe</b> e <b>Siga</b> o site e o conteúdo que ele oferece. Se você quiser ajudar ainda mais, a seguir estão algumas opções fique a vontade para escolher uma ou todas elas. :)
+        </div>
+        <div class="topico">VOTE OS PROJETOS</div>
+        <div class="p">
+            Quanto mais pessoas votarem os projetos de lei, maior será a pressão sobre os políticos para que eles satisfaçam a vontade popular. Com os dados gerados pelos seus votos será construído um ranking dos políticos que melhor nos representa na utilização do nosso poder.
+        </div>
+        <div class="topico">ADICIONE NOTÍCIAS</div>
+        <div class="p">
+            Leia mais sobre política, ou assuntos relacionados, em outros sites e sempre que você encontrar algo que deva ser lembrado adicione o link destas notícias na linha do tempo das pessoas e partidos envolvidos, assim você ajudará outras pessoas a lembrar dos fatos no momento mais importante: AS ELEIÇÕES.
+        </div>
+        <div class="topico">CONHEÇA SEUS CANDIDATOS</div>
+        <div class="p">
+            Antes de votar, nas próximas eleições, analise os "Dossiês" dos seus candidatos e lembre seus amigos de fazer o mesmo. Se tiver tempo procure informações também em outros sites e compartilhe.
+        </div>
+        <div class="topico">DENUNCIE OS ABUSOS</div>
+        <div class="p">
+            Se você encontrar, dentro do site, alguma postagem abusiva, em qualquer sentido, denuncie! Todas as denúncias serão mantidas em sigilo e isso ajudará muito a manter o ambiente saudável para qualquer público.
+        </div>
+        <div class="topico">SINALIZE OS PROBLEMAS</div>
+        <div class="p">
+            Estaremos sempre trabalhando para fornecer informações com qualidade, mas também estamos sujeitos a falhas. Se você encontrar alguma nos avise que consertaremos o mais rápido possível.
+        </div>
+        <div class="topico">FAÇA SUA SUGESTÃO</div>
+        <div class="p">
+            Se você tiver alguma ideia que possa trazer mais valor a este projeto, desde uma simples alteração de texto até a criação de um novo recurso, compartilhe conosco.
+        </div>
+        <div class="topico">COLOQUE-NOS EM SUA PÁGINA</div>
+        <div class="p">
+            Se você possui alguma página na internet adicione a ela um banner do “OPovoUnido.com”, e peça para seus fãs, leitores ou clientes conhecerem também este projeto.
+        </div>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/sobre-nos/como-ajudar' ?>" data-send="false" data-layout="box_count" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-href="<?php echo DFL_URL . '/sobre-nos/como-ajudar' ?>" data-size="tall" ></div><br/>
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/sobre-nos/como-ajudar' ?>" data-lang="en" data-text="Como AJUDAR ? (<?php echo DFL_URL ?>)" data-dnt="true" data-count="vertical"></a><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

@@ -1,0 +1,78 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Perfis - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" language="javascript" src="/scripts/alex/campo.js"></script>
+<script type="text/javascript" language="javascript">
+    function marcarFiltro(obj){
+        if(obj.name == 'palavra_chave' && obj.value.length > 0 && obj.value != 'palavra-chave...'){
+            marcaCampoOk(obj);
+            return;
+        }
+        desmarcaCampo(obj);
+    }
+    function formSubmit(){
+        link = '/perfis';
+        palavra_chave = document.getElementById('palavra_chave');
+        if(palavra_chave.value.length > 2 && palavra_chave.value != 'palavra-chave...'){
+            link += '/palavra-chave/' + palavra_chave.value;
+        }
+        vaiPara(link);
+    }
+</script>
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="FILTRO">
+        <input type="hidden" id="palavra_chave_atual" value="<?php if(isset($this->Lista['get']['palavra-chave'])) echo $this->Lista['get']['palavra-chave'] ?>">
+        <input type="text" id="palavra_chave" name="palavra_chave" class="item text" value="<?php echo (isset($this->Lista['get']['palavra-chave']) && $this->Lista['get']['palavra-chave'] != '') ? ($this->Lista['get']['palavra-chave']) : ('palavra-chave...'); ?>" lang="palavra-chave..." maxlength="100" onfocus="entrou(this)" onblur="saiu(this);marcarFiltro(this);" onkeyup="marcarFiltro(this)" title="Palavra-chave para a busca.">
+        <a class="item alex-bt" onclick="formSubmit()" ><img class="icone" src="/temas/default/default/icones/search.png" />Buscar</a>
+    </div>
+    
+    <?php
+    if ($this->Lista['pagina']['qtd-itens'] > 0) {
+        echo '</div><div class="RESULTADO" id="RESULTADO">';
+        include APPLICATION_PATH . '/modules/default/views/scripts/perfis/ajax-paginacao.phtml';
+    } else {
+        echo '<div class="RESULTADO">';
+        if(isset($this->Lista['get']['palavra-chave']) && strlen($this->Lista['get']['palavra-chave']) > 2 ){
+            echo '<div class="mensagem"><i>NENHUMA PESSOA FOI ENCONTRADA</i></div>';
+        }else{
+            echo '<div class="mensagem"><i>A <b>Palavra-Chave</b> da sua busca deve conter ao menos 2 caracteres.</i></div>';
+        }
+        echo '</div>';
+    }
+    ?>
+</div>
+
+<script type="text/javascript" language="javascript">
+    var jQPaginaStatus = 0;
+    var jQPaginaAtual = <?php echo $this->Lista['pagina']['atual'] ?>;
+    var jQPaginaFinal = <?php echo $this->Lista['pagina']['fim'] ?>;
+    
+    $(window).bind("scroll", function(){
+        page = $('#CONTEUDO').height() + 200;
+        if(($(window).scrollTop() + $(window).height() + 400) > page){
+            if(jQPaginaStatus == 0 && jQPaginaAtual < jQPaginaFinal){
+                jQPaginaStatus = 1;
+                $.post('/perfis/ajax-paginacao/id/0', {
+                    'pagina': ++jQPaginaAtual,
+                    'palavra-chave': document.getElementById('palavra_chave_atual').value
+                }, function(data){
+                    jQPaginaStatus = 0;
+                    document.getElementById('RESULTADO').innerHTML += data.toString();
+                }, 'html');
+            }
+        }
+    });
+
+    window.onload(marcarFiltro(document.getElementById('palavra_chave')));
+</script>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_noticias.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

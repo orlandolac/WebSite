@@ -1,0 +1,20 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Administração - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+    <div class="TEXTO">
+        <div class="topico">Página...</div>
+        <div class="p">
+            ... em contrução.
+        </div>
+    </div>
+</div>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/admin/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

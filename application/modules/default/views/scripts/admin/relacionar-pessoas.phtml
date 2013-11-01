@@ -1,0 +1,55 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Relacionar Pessoas - Administração - <?php echo DFL_NOME ?></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<form class="RESULTADO" id="RESULTADO" action="" style="" name="formRelacionar"  method="post">
+    <input type="hidden" name="pessoa_cd_origem" value="<?php echo $this->pessoa['pessoa_cd_origem'] ?>">
+    <input type="hidden" name="pessoa_id">
+    <?php
+    if ($this->Lista['pagina']['qtd-itens'] > 0) {
+        foreach ($this->Lista['resultado'] as $obj) {
+            echo '<div class="MINIATURA">';
+                echo '<a class="foto" href="/dossies/' . $obj['pessoa_url'] . '" style="' . (($obj['pessoa_flags'][4]==1)?('background-image: url(\'/dossies/ajax-foto/id/' . $obj['pessoa_id'] . '\');'):('')) . '"></a>';
+                echo '<div class="texto">';
+                    echo '<div class="nome">' . $obj['pessoa_apelido'] . '</div>';
+                    echo '<div class="descricao">' . $obj['pessoa_nome'] . '</div>';
+                echo '</div>';
+                echo '<div class="opcoes">';
+                    echo '<a onclick="relacionarPessoa(' . $obj['pessoa_id'] . ')" title="RELACIONAR COM ESTA PESSOA" style="background-image: url(\'/temas/default/default/icones/back.png\')"></a>';
+                echo '</div>';
+            echo '</div>';
+        }
+    }
+    ?>
+</form>
+
+<script type="text/javascript" language="javascript">
+    function relacionarPessoa(pessoa_id){
+        f = document.formRelacionar
+        f.pessoa_id.value = pessoa_id;
+        f.submit();
+    }
+    // COMPARACAO //
+    $(window).bind("scroll", function(){
+        if($(window).scrollTop() > 238){
+            $('#COMPARACAO').css('margin-top', ($(window).scrollTop()-238)+'px');
+        }else{
+            $('#COMPARACAO').css('margin-top', '0px');
+        }
+    });
+</script>
+
+<?php
+$this->placeholder('ConteudoEsquerda')->captureStart();
+echo '<div class="MINIATURA" id="COMPARACAO">';
+    echo '<div class="foto" style="background-image: url(\'http://www.camara.gov.br/internet/deputado/bandep/' . $this->pessoa['pessoa_cd_origem'] . '.jpg\');"></div>';
+    echo '<div class="texto">';
+        echo '<div class="nome">' . substr($this->pessoa['pessoa_nome'], (strpos($this->pessoa['pessoa_nome'], '-')+1)) . '</div>';
+        echo '<div class="descricao">' . mb_strtoupper(substr($this->pessoa['pessoa_nome'], 0, strpos($this->pessoa['pessoa_nome'], '-'))) . '</div>';
+    echo '</div>';
+echo '</div>';
+echo '<div style="font-size:50px;text-align:center;font-weight:bold" title="NÃO RELACIONADOS">' . $this->pessoa['qtd'] . '</div>';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

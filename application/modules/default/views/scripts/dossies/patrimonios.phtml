@@ -1,0 +1,80 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title>Patrimônios - <?php echo $this->obj['pessoa_nome'] . ' - Dossiês - ' . DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->obj['pessoa_cpf'] . ', ' . $this->obj['pessoa_titulo_eleitor'] . ', ' . $this->obj['pessoa_nome'] ?>" />
+<meta name="description" content="<?php echo $this->obj['pessoa_nome'] ?>" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="CONTEINER">
+
+<?php
+$db = Zend_Registry::get('db');
+$res = $db->fetchAll('
+    SELECT bem_eleicao_id, sum(bem_valor) as total
+    FROM pu_bem
+    WHERE bem_pessoa_id=' . $this->obj['pessoa_id'] . '
+    GROUP BY bem_eleicao_id
+    ORDER BY bem_eleicao_id
+');
+if($res){
+    ?>
+    <div class="" style="height: 400px" id="linhaPatrimonial"></div>
+    <script type="text/javascript" language="javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" language="javascript">
+        google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript" language="javascript">
+        function mostraGraficos(){
+            new google.visualization.AreaChart(document.getElementById('linhaPatrimonial')).
+                draw(google.visualization.arrayToDataTable([
+                    ['Dias', 'Patrimônio']
+                    <?php
+                    $anos = Default_Model_Lista_Eleicao::get();
+                    foreach ($res as $value) {
+                        echo ",['" . $value['bem_eleicao_id'] . "', " . $value['total'] . "]";
+                    }
+                    ?>
+                ]), {title: 'Evolução Patrimônial',
+                     vAxis: {title: ''},
+                     hAxis: {title: ''},
+                     colors: ['#f00','#ccc'],
+                     fontSize: 10
+            });
+        }
+        window.onload(mostraGraficos());
+    </script>
+    <?php
+}else{
+    ?>
+    <div class="TEXTO">
+        <div class="topico">Não há dados suficientes para gerar o gráfico.</div>
+        <div class="p">
+            Os dados que alimentam o gráfico da evolução patrimonial da pessoa são retirados do site
+            do TSE. Se os dados estão indisponíveis ou incompletos nesta tela, isso se deve a pelo
+            menos um dos seguintes motivos:
+        </div>
+        <div class="p">
+            <ul>
+                <li>- Talvez o TSE não tenha disponibilizado os dados.</li>
+                <li>- Talvez o TSE não possua os dados completos.</li>
+                <li>- Talvez os dados façam parte do grupo de dados que nós ainda não conseguimos organizar.</li>
+            </ul>
+        </div>
+    </div>
+    <?php
+}
+?>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/patrimonios' ?>" data-lang="en" data-text="Patriônio (<?php echo $this->obj['pessoa_apelido'] ?>)" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/patrimonios' ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/dossies/' . $this->obj['pessoa_id'] . '/patrimonios' ?>"></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/dossies/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>

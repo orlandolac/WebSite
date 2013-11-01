@@ -1,0 +1,26 @@
+<?php
+foreach ($this->Lista['resultado'] as $obj) {
+    echo '<div class="MINIATURA RANK">';
+        echo '<a class="foto" href="/partidos/' . $obj['partido_url'] . '" style="' . (($obj['partido_flags'][4]==1)?('background-image: url(\'/uploads/partidos/' . $obj['partido_id'] . '/foto.png\');'):('')) . '"></a>';
+        echo '<div class="texto">';
+            echo '<div class="nome">' . $obj['partido_sigla'] . ', ' . $obj['partido_numero'] . '<div class="topo">' . $obj['rank_ano'] . '</div></div>';
+            echo '<div class="descricao">' . $obj['partido_nome'] . '</div>';
+            
+            echo '<div class="rankTable">';
+                echo '<div class="texto">';
+                    echo '<div class="nome">Qtd. Pontos</div>';
+                    echo '<div class="descricao">' . $obj['rank_qtd_pontos'] . '</div>';
+                echo '</div>';
+                echo '<div class="texto">';
+                    echo '<div class="nome">Qtd. Positivos</div>';
+                    echo '<div class="descricao">' . $obj['rank_qtd_positivos'] . '</div>';
+                echo '</div>';
+                echo '<div class="texto">';
+                    echo '<div class="nome">Qtd. Negativos</div>';
+                    echo '<div class="descricao">' . $obj['rank_qtd_negativos'] . '</div>';
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+}
+?>

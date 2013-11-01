@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Alex Oliveira" />
+        <meta name="copyright" content="Alex Oliveira" />
+        
+        <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico" />
+        <link media="screen" rel="stylesheet" type="text/css" href="/temas/default/default/css/base.css" />
+        
+        <?php echo $this->placeholder('Head') ?>
+        
+        <script type="text/javascript" language="javascript" src="/scripts/alex/global.js"></script>
+        <script type="text/javascript" language="javascript" src="/scripts/alex/ajax.js"></script>
+        <script type="text/javascript" language="javascript" src="/scripts/alex/jquery.js"></script>
+        
+        <?php if(Zend_Auth::getInstance()->hasIdentity()){ ?>
+            <script type="text/javascript" language="javascript" src="/scripts/alex/projeto-on.js"></script>
+            <script type="text/javascript" language="javascript" src="/scripts/alex/noticia-on.js"></script>
+        <?php }else{ ?>
+            <script type="text/javascript" language="javascript" src="/scripts/alex/projeto-off.js"></script>
+            <script type="text/javascript" language="javascript" src="/scripts/alex/noticia-off.js"></script>
+        <?php } ?>
+            
+        <script type="text/javascript" language="javascript">
+            $(window).bind("load", function(){
+                posicionaSocialize();
+            });
+            $(window).bind("scroll", function(){
+                if($(window).scrollTop() > 90){
+                    $('#BOTAO-TOPO').css('opacity', '1');
+                    $('#BOTAO-TOPO').css('visibility', 'visible');
+                }else{
+                    $('#BOTAO-TOPO').css('opacity', '0');
+                    $('#BOTAO-TOPO').css('visibility', 'hidden');
+                }
+            });
+            $(window).bind("resize", function(){
+                posicionaSocialize();
+            });
+            function posicionaSocialize(){
+                if($(window).width() > 1129){
+                    $('#ConteudoSocialize').css('right', ((($(window).width() - 1024)/2)-57)+'px');
+                }else{
+                    $('#ConteudoSocialize').css('right', '0px');
+                }
+            }
+            function ajaxLocalidade(){
+                carregarAjax('/index/ajax-localidade', 'DIALOGO');
+            }
+            function irTopo(){
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 500);
+            }
+        </script>
+        <script type="text/javascript">
+            //window.___gcfg = {lang: 'pt-BR'};
+            (function() {
+                var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;
+                po.src = "https://apis.google.com/js/plusone.js?publisherid=100535975689010500813";
+                var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+        
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        
+        <div id="scriptsAjax"></div>
+    </head>
+    
+    <body>
+        <div id="fb-root"></div>
+        <script type="text/javascript" language="javascript">(
+            function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=484204754972513";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        
+        <div class="TUDO" id="TUDO">
+            <a name="topo"></a>
+            <a href="#topo" onclick="irTopo();" class="BOTAO-TOPO" id="BOTAO-TOPO" title="Ir para o TOPO."></a>
+            
+            <div class="CABECALHO">
+                <div class="logo">
+                    <div class="corpo">
+                        <div class="area-restrita">
+                            <?php
+                            if(Zend_Auth::getInstance()->hasIdentity()){
+                                if(Zend_Auth::getInstance()->getIdentity()->user_tipo_id == 3){
+                                    echo '<a class="bt" href="/admin" class="alex-bt aba">admin</a>';
+                                }
+                                echo '<a class="bt" href="/perfis/' . Zend_Auth::getInstance()->getIdentity()->user_id . '" class="alex-bt aba">perfil</a>';
+                                echo '<a class="bt" href="/user" class="alex-bt aba">conta</a>';
+                                echo '<a class="bt" href="/area-restrita/sair" class="alex-bt aba">sair</a>';
+                                if(Zend_Auth::getInstance()->getIdentity()->user_icone != ''){
+                                    echo '<a class="bt foto" href="/perfil/' . Zend_Auth::getInstance()->getIdentity()->user_id . '" class="alex-bt aba" style="background-image: url(\'' . Zend_Auth::getInstance()->getIdentity()->user_icone . '\')"></a>';
+                                }else{
+                                    echo '<a class="bt foto" href="/" class="alex-bt aba"> </a>';
+                                }
+                            }else{
+                                require_once APPLICATION_PATH . '/../library/Facebook/facebook.php';
+                                $facebook = new Facebook(array(
+                                    'appId'  => '484204754972513',
+                                    'secret' => '2a2b335c0216801cb706c837533bba4c',
+                                    'fileUpload' => true,
+                                ));
+                                ?>
+                                <a>entre com</a>
+                                <a class="bt" style="background-color: #3B5998;" href="<?php echo $facebook->getLoginUrl(array('scope' => 'email, read_friendlists', 'redirect_uri' => DFL_URL.'/area-restrita/entrar-facebook', 'cancel_uri' => DFL_URL.'/area-restrita')) ?>">facebook</a>
+                                <a class="bt" style="background-color: #DB4B39;" href="https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&state=/profile&redirect_uri=<?php echo DFL_URL ?>/area-restrita/entrar-google&response_type=code&client_id=728241411556.apps.googleusercontent.com&approval_prompt=force">google+</a>
+                                <!--a class="bt" href="/area-restrita" class="<?php echo (($this->controller == 'area-restrita' && $this->action == 'index')?('atual'):('')) ?>">e-mail</a-->
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="socialize"><br/>
+                            <div style="float: left; height: 10px; width: 100px;"></div>
+                            <div style="float: left" class="fb-like" data-href="http://www.facebook.com/opovounido.no.face" data-send="false" data-layout="box_count" data-show-faces="false" data-action="like"></div>
+                            <div style="float: left; margin: 0 30px;"><div class="g-plusone" data-href="//plus.google.com/100535975689010500813" data-size="tall" ></div></div>
+                            <a class="twitter-share-button" style="float: left" href="https://twitter.com/share" data-url="<?php echo DFL_URL ?>" data-lang="en" data-text="Conheçam OPovoUnido.com" data-dnt="true" data-count="vertical"></a>
+                        </div>
+                        <div class="faixa">
+                            <a class="faixa-link" href="/sobre-nos/conheca-o-projeto" title="CONHEÇA o Projeto . . ."></a>
+                            <a class="faixa-link" href="/sobre-nos/faca-sua-doacao" title=". . . faça sua DOAÇÃO . . ."></a>
+                            <a class="faixa-link" href="/sobre-nos/como-ajudar" title=". . . ou AJUDE de outras formas !"></a>
+                        </div>
+                        <a href="/" style="position:absolute;margin-top:45px;width:525px;height:125px"></a>
+                    </div>
+                </div>
+                <div class="menu">
+                    <ul class="corpo">
+                        <li><a class="op" href="/"><img src="/temas/default/default/icones/home-branca.png" style="width: 20px" /></a></li>
+                        <li><a class="op" href="/brasil">BRASIL</a>
+                            <ul style="width: 125px">
+                                <li><a href="/brasil/territorio">TERRITÓRIO</a></li>
+                                <li><a href="/brasil/leis">LEIS</a></li>
+                                <!--li><a href="/brasil/eleicoes">ELEIÇÕES</a></li-->
+                                <!--li><a href="/brasil/cargos">CARGOS</a></li-->
+                            </ul>
+                        </li>
+                        <li><a class="op" href="/candidatos">CANDIDATOS</a>
+                            <ul style="width: 192px">
+                                <li><a href="/candidatos/presidentes">PRESIDENTES</a></li>
+                                <li><a href="/candidatos/deputados-federais">DEPUTADOS FEDERAIS</a></li>
+                                <li><a href="/candidatos/senadores">SENADORES</a></li>
+                                <hr/>
+                                <li><a href="/candidatos/governadores">GOVERNADORES</a></li>
+                                <?php
+                                if($this->localidade->estado_id == 8){
+                                    echo '<li><a href="/candidatos/deputados-distritais">DEPUTADOS DISTRITAIS</a></li>';
+                                }else{
+                                    echo '<li><a href="/candidatos/deputados-estaduais">DEPUTADOS ESTADUAIS</a></li>';
+                                    echo '<hr/>';
+                                    echo '<li><a href="/candidatos/prefeitos">PREFEITOS</a></li>';
+                                    echo '<li><a href="/candidatos/vereadores">VEREADORES</a></li>';
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                        <li><a class="op" href="/dossies">DOSSIÊS</a></li>
+                        <li><a class="op" href="/partidos">PARTIDOS</a></li>
+                        <li><a class="op" href="/projetos">PROJETOS</a></li>
+                        <li><a class="op" href="/ranking">RANKING</a>
+                            <ul style="width: 125px">
+                                <li><a href="/ranking/politicos">POLÍTICOS</a></li>
+                                <li><a href="/ranking/partidos">PARTIDOS</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="op" href="/noticias">NOTÍCIAS</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="CONTEUDO" id="CONTEUDO">
+                <center>
+                    <div class="LOCAL">
+                        <div class="FISICO">
+                            <div class="CONTEINER" onclick="vaiPara('/localizacao');" title="<?php echo $this->localidade->estado_nome . ', ' . $this->localidade->municipio_nome ?>">
+                                <div class="titulo tituloSozinho" style="background-image: url('/temas/default/default/icones/pencil.png');">
+                                    <?php echo $this->localidade->estado_sigla . ', ' . $this->localidade->municipio_nome ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="VIRTUAL">
+                            <div class="CONTEINER">
+                                <div class="titulo tituloSozinho fim">
+                                    <?php echo implode(' > ', $this->local) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ConteudoCorpo" id="ConteudoCorpo">
+                        <div class="ConteudoSocialize" id="ConteudoSocialize">
+                            <div class="MINIATURA" title="Adicionar Notícia">
+                                <a style="display:inline-block;padding:10px 19px 7px 19px;margin-top:-5px" onclick="<?php echo (Zend_Auth::getInstance()->hasIdentity())?("carregarAjax('/noticias/ajax-noticias-add/id/0?url=" . $_SERVER['REQUEST_URI'] . "', 'DIALOGO')"):('soCadastrados()') ?>"><img src="/temas/default/default/icones/add.png" /></a>
+                            </div>
+                            <?php echo $this->placeholder('ConteudoSocialize') ?>
+                        </div>
+                        
+                        <div class="ConteudoEsquerda" id="ConteudoEsquerda">
+                            <?php echo $this->placeholder('ConteudoEsquerda') ?>
+                        </div>
+
+                        <div class="Caixa">
+                            <div class="SeparaEsquerda">
+                                <div class="ConteudoDireita">
+                                    <?php echo $this->placeholder('ConteudoDireita') ?>
+                                </div>
+
+                                <div class="SeparaDireita">
+                                    <div class="ConteudoCentro">
+                                        <div class="MENSAGENS" id="MENSAGENS">
+                                            <?php
+                                            $sys = new Zend_Session_Namespace('sistem');
+                                            $sys->dialogo->imprimir();
+                                            ?>
+                                        </div>
+                                        
+                                        <!-- google_ad_section_start -->
+                                        <?php echo $this->layout()->content ?>
+                                        <!-- google_ad_section_end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CLEAR"></div>
+                </center>
+            </div>
+
+            <div class="RODAPE">
+                <div class="corpo">
+                    <div class="direito">
+                        TODOS OS DIREITOS RESERVADOS.
+                    </div>
+                    <div class="painel">
+                        <div class="padrao">
+                            <ul>
+                                <li><a href="/sobre-nos/">Quem Somos</a></li>
+                                <li><a href="/sobre-nos/conheca-o-projeto">Conheça o Projeto !</a></li>
+                                <!--li><a href="/sobre-nos/faca-sua-doacao">Faça sua DOAÇÃO !</a></li-->
+                                <li><a href="/sobre-nos/como-ajudar">Como AJUDAR ?</a></li>
+                                <li><a href="/contato">Contato</a></li>
+                                <li> </li>
+                                <li><a href="/sobre-nos/perguntas-frequentes">Perguntas Frequentes</a></li>
+                                <li><a href="/sobre-nos/politicas-e-termos">Políticas e Termos</a></li>
+                                <li><a href="/sobre-nos/recomendamos">Recomendamos</a></li>
+                                <li> </li>
+                                <li><a href="/brasil">Brasil</a></li>
+                                <li><a href="/candidatos">Candidatos</a></li>
+                                <li><a href="/dossies">Dossiês</a></li>
+                                <li><a href="/partidos">Partidos</a></li>
+                                <li><a href="/projetos">Projetos</a></li>
+                                <li><a href="/noticias">Notícias</a></li>
+                                <li><a href="/perfis">Perfis</a></li>
+                            </ul>
+                        </div>
+                        <div class="plugin">
+                            <div class="g-page" data-width="300" data-href="//plus.google.com/100535975689010500813" data-rel="publisher"></div>
+                            <div class="fb-like-box" data-width="340" data-height="359" data-href="http://www.facebook.com/opovounido.no.face" data-show-faces="true" data-header="false"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="DIALOGO" id="DIALOGO">
+                <!--
+                <div class="CONTEINER-DIALOGO">
+                    <div class="POPUP">
+                        <div class="ppClose"><div class="botao" onclick="desligaDialogo()">x</div></div>
+                        <div class="ppTitulo">Título da Janela</div>
+                        <div class="ppCorpo">CORPO</div>
+                        <div class="ppOpcoes">
+                            <a class="alex-bt"> Botão 1</a>
+                            <a class="alex-bt"> Botão 2</a>
+                            <a class="alex-bt"> Botão 3</a>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+            
+        <div class="NADA" id="NADA"></div>
+        
+        <script type="text/javascript">
+            $('.ajaxNoticiasLigar').bind('mouseup', function(e){
+                switch(e.which){
+                    case 1: //left Click
+                    case 2: //middle Click
+                    case 3: //right Click
+                        ajaxNoticiasLigar($(this).attr('noticia_id'));
+                }
+            });
+        </script>
+    </body>
+</html>

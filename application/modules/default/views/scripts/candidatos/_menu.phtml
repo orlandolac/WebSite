@@ -1,0 +1,21 @@
+<div class="CONTEINER">
+    <div class="titulo"><a href="/candidatos">Candidatos</a></div>
+    <div class="MENU-LISTA">
+        <ul><li><a href="/candidatos/presidentes">Presidentes</a></li>
+            <li><a href="/candidatos/deputados-federais">Deputados Federais</a></li>
+            <li><a href="/candidatos/senadores">Senadores</a></li>
+            <li><hr/></li>
+            <li><a href="/candidatos/governadores">Governadores</a></li>
+            <?php
+            if($this->localidade->estado_id == 8){
+                echo '<li><a href="/candidatos/deputados-distritais">Deputados Distritais</a></li>';
+            }else{
+                echo '<li><a href="/candidatos/deputados-estaduais">Deputados Estaduais</a></li>';
+                echo '<li><hr/></li>';
+                echo '<li><a href="/candidatos/prefeitos">Prefeitos</a></li>';
+                echo '<li><a href="/candidatos/vereadores">Vereadores</a></li>';
+            }
+            ?>
+        </ul>
+    </div>
+</div>

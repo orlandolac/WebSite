@@ -1,0 +1,53 @@
+<?php $this->placeholder('Head')->captureStart() ?>
+<title><?php echo $this->obj['noticia_titulo'] . ' - Notícias - ' . DFL_NOME ?></title>
+<meta name="keywords" content="<?php echo $this->obj['noticia_titulo'] ?>" />
+<meta name="description" content="<?php echo $this->obj['noticia_resumo'] ?>" />
+<?php $this->placeholder('Head')->captureEnd() ?>
+
+<div class="RESULTADO">
+    <?php
+    foreach ($this->obj['pessoas'] as $obj) {
+        echo '<div class="MINIATURA">';
+            echo '<a class="foto" href="/dossies/' . $obj['pessoa_url'] . '" style="' . (($obj['pessoa_flags'][4]==1)?('background-image: url(\'/dossies/ajax-foto/id/' . $obj['pessoa_id'] . '\');'):('')) . '"></a>';
+            echo '<div class="texto">';
+                echo '<div class="nome">' . $obj['pessoa_apelido'] . '</div>';
+                echo '<div class="descricao">' . $obj['pessoa_nome'] . '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
+    foreach ($this->obj['partidos'] as $obj) {
+        echo '<div class="MINIATURA">';
+            echo '<a class="foto" href="/partidos/' . $obj['partido_url'] . '" style="' . (($obj['partido_flags'][4]==1)?('background-image: url(\'/uploads/partidos/' . $obj['partido_id'] . '/foto.png\');'):('')) . '"></a>';
+            echo '<div class="texto">';
+                echo '<div class="nome">' . $obj['partido_sigla'] . ', ' . $obj['partido_numero'] . '</div>';
+                echo '<div class="descricao">' . $obj['partido_nome'] . '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
+    ?>
+</div>
+
+<div class="CONTEINER">
+    <div class="titulo">Comentários</div>
+    <div class="TEXTO">
+        <div class="topico">Página...</div>
+        <div class="p">
+            ... em contrução.
+        </div>
+    </div>
+</div>
+
+<?php $this->placeholder('ConteudoSocialize')->captureStart() ?>
+<div class="MINIATURA">
+    <a class="twitter-share-button" href="https://twitter.com/share" data-url="<?php echo DFL_URL . '/noticias/' . $this->obj['noticia_id'] ?>" data-lang="en" data-text="<?php echo $this->obj['noticia_titulo'] ?>" data-dnt="true" data-count="vertical"></a><br/>
+    <div class="fb-like" data-href="<?php echo DFL_URL . '/noticias/' . $this->obj['noticia_id'] ?>" data-send="false" data-layout="box_count" data-width="50" data-show-faces="false" data-action="like"></div><br/>
+    <div class="g-plusone" data-size="tall" data-href="<?php echo DFL_URL . '/noticias/' . $this->obj['noticia_id'] ?>"></div><br/>
+</div>
+<?php
+$this->placeholder('ConteudoSocialize')->captureEnd();
+$this->placeholder('ConteudoEsquerda')->captureStart();
+include APPLICATION_PATH . '/modules/default/views/scripts/noticias/_menu.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/_projeto.phtml';
+include APPLICATION_PATH . '/modules/default/views/scripts/sobre-nos/_menu.phtml';
+$this->placeholder('ConteudoEsquerda')->captureEnd();
+?>
