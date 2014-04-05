@@ -4,3 +4,5 @@ site
 Nesta pasta você encontrará toda a estrutura de diretórios e os arquivos de código fonte do site.
 
 1ª alteração
+
+2ª alteração
