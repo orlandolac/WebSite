@@ -1,5 +1,5 @@
 # REGRAS
-====
+
 Sobre o diretório "/docs"
 ====
 Este é um diretório exclusivamente para arquivos relacionados ao desenvolvimento do sistema, mas que
