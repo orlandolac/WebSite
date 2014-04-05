@@ -1,8 +1,4 @@
 Seja Bem-Vindo!
 ====
 
-Nesta pasta você encontrará toda a estrutura de diretórios e os arquivos de código fonte do site.
-
-1ª alteração
-
-2ª alteração
+Aqui você encontrará toda a estrutura de diretórios e os arquivos de código fonte do site OPovoUnido.com. Com eles você poderá instalar uma versão local do site e criar e submeter novos recursos que serão analisados e disponibilizados on-line
