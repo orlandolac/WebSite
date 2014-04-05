@@ -1,4 +1,4 @@
-# REGRAS
+REGRAS
 
 Sobre o diretório "/docs"
 ====
