@@ -1,7 +1,7 @@
-# REGRAS
+# OPovoUnido / Docs
 
 
-Sobre o diretório "/docs"
+Sobre o diretório "docs"
 ====
 Este é um diretório exclusivamente para arquivos relacionados ao desenvolvimento
 do sistema, mas que não fazem parte dele em si. O diretório "/docs" não será

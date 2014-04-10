@@ -1,0 +1,22 @@
+<? if(!Zend_Auth::getInstance()->hasIdentity()): ?>
+<div id="janela-login" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Entrar</h4>
+            </div>
+            <div class="modal-body">
+                <? include SYS_PATH . '/application/default/views/scripts/area-restrita/conectar.phtml' ?>
+                <div class="row">
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <a href="/area-restrita" class="btn btn-block btn-default" style="margin-top: 15px">
+                            <i class="glyphicon glyphicon-log-in"></i>  tradicional
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<? endif ?>

@@ -1,0 +1,80 @@
+<a id="TOPO">^</a>
+
+<header id="CABECALHO">
+    <section class="container">
+        <a class="logo" href="/"><img src="/img/logo.png"></a>
+        <div class="socialize">
+            <?php require SYS_PATH . '/application/default/layouts/-social.phtml' ?>
+        </div>
+    </section>
+
+    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/"><i class="glyphicon glyphicon-home"></i> Início</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Alterar Navegação</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-tower"></i> Institucional</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/institucional/quem-somos">Quem-Somos</a></li>
+                            <li><a href="/institucional/conheca-o-projeto">Conheça o Projeto !</a></li>
+                            <li><a href="/institucional/como-ajudar">Como AJUDA ?</a></li>
+                            <li><a href="/institucional/perguntas-frequentes">Perguntas Frequentes</a></li>
+                            <li><a href="/institucional/politicas-e-termos">Políticas & Termos</a></li>
+                            <li><a href="/institucional/recomendamos">Recomendamos</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/contato">Contato</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Políticos</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/politicos">Todos</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Candidatos</li>
+                            <li><a href="/candidatos/presidentes">Presidentes</a></li>
+                            <li><a href="/candidatos/deputados-federais">Desputados Federais</a></li>
+                            <li><a href="/candidatos/senadores">Senadores</a></li>
+                            <li><a href="/candidatos/governadores">Governadores</a></li>
+                            <li><a href="/candidatos/deputados-distritais">Deputados Distritais</a></li>
+                            <li><a href="/candidatos/deputados-estaduais">Deputados Estaduais</a></li>
+                            <li><a href="/candidatos/prefeitos">Prefeitos</a></li>
+                            <li><a href="/candidatos/vereadores">Vereadores</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="/partidos"><i class="glyphicon glyphicon-flag"></i> Partidos</a></li>
+                    <li><a href="/projetos"><i class="glyphicon glyphicon-file"></i> Projetos</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> Mais<div class="caret"></div></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/noticias"><i class="glyphicon glyphicon-globe"></i> Notícias</a></li>
+                            <li><a href="/rankings"><i class="glyphicon glyphicon-stats"></i> Rankings</a></li>
+                            <li><a href="/enquetes"><i class="glyphicon glyphicon-ok"></i> Enquetes</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Brasil</li>
+                            <li><a href="/brasil/cargos">Cargos</a></li>
+                            <li><a href="/brasil/constituicao">Constituição</a></li>
+                            <li><a href="/brasil/eleicoes">Eleições</a></li>
+                            <li><a href="/brasil/leis">Leis</a></li>
+                            <li><a href="/brasil/territorios">Territórios</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <? include SYS_PATH . '/application/default/layouts/-cabecalho-menu-' . (Zend_Auth::getInstance()->hasIdentity()?'on':'off') . '.phtml' ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

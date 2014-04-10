@@ -1,0 +1,36 @@
+<? $this->placeholder('head')->captureStart() ?>
+<title><?= SYS_NOME ?> - Registro de Exceção</title>
+<? $this->placeholder('head')->captureEnd() ?>
+
+<h1>Ops! Temos um probleminha... :)</h1>
+<h2><?=$this->message?></h2>
+<h3>Registramos todas as informações sobre esta exceção e assim que possível criaremos uma solução.</h3>
+
+<?php
+if(isset($this->exception) && SYS_ENV != 'production'){
+    ?>
+    <h4>Informações sobre o erro: </h4>
+    <pre><?
+    echo 'Hora......: ' . date('H:i:s') . "\n";
+    echo 'Data......: ' . date('d-m-Y') . "\n";
+    echo 'Mensagem..: ' . $this->exception->getMessage() . "\n";
+    echo 'Módulo....: ' . $this->request->getParam('module') . "\n";
+    echo 'Versão....: 1.0 Beta';
+    echo 'Arquivo...: ' . $this->exception->getFile() . "\n";
+    echo 'Linha.....: ' . $this->exception->getLine() . "\n";
+    echo 'Codigo....: ' . $this->exception->getCode() . "\n";
+    ?></pre>
+
+    <h4>Parâmetros da requisição:</h4>
+    <pre><?=var_export($this->request->getParams(), true)?></pre>
+
+    <h4>Restreamento: </h4>
+    <pre><?=$this->exception->getTraceAsString()?></pre>
+
+    <h4>Cache: </h43>
+    <pre><?//print_r($this->exception->getTrace())?></pre>
+    <?php
+}
+?>
+
+<? include SYS_PATH . '/application/default/views/scripts/index/mapa.phtml' ?>

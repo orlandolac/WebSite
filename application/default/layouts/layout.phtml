@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+
+<html lang="pt-br" class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="author" content="Alex Oliveira"/>
+        <meta name="copyright" content="OPovoUnido.com"/>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css" />
+
+        <!-- OPovoUnido -->
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+        <!-- Includes -->
+        <?= $this->placeholder('head') ?>
+    </head>
+
+    <body>
+        <div id="fb-root"></div>
+
+        <?php include SYS_PATH . '/application/default/layouts/-cabecalho.phtml' ?>
+        <?php include SYS_PATH . '/application/default/layouts/-trilha.phtml' ?>
+        <section id="CONTAINER" class="container">
+            <section id="ALERTAS">
+                <?php Pu_Alert::show() ?>
+            </section>
+            <section id="PRINCIPAL">
+                <!-- google_ad_section_start -->
+                <?= $this->layout()->content ?>
+                <!-- google_ad_section_end -->
+            </section>
+        </section>
+        <?php include SYS_PATH . '/application/default/layouts/-rodape.phtml' ?>
+        <?php include SYS_PATH . '/application/default/layouts/-janela-login.phtml' ?>
+        
+        <!-- Bootstrap -->
+        <script type="text/javascript" language="javascript" src="/bootstrap/js/jquery.js"></script>
+        <script type="text/javascript" language="javascript" src="/bootstrap/js/bootstrap.js"></script>
+
+        <!-- OPovoUnido -->
+        <script type="text/javascript" language="javascript" src="/js/global.js"></script>
+
+        <!-- Twitter -->
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        
+        <!-- Facebook -->
+        <script src="http://connect.facebook.net/pt_BR/all.js#appId=<?= SYS_SOCIAL_FB_APP_ID ?>&status=1&cookie=1&xfbml=1"></script>
+        
+        <!-- Google -->
+        <script type="text/javascript">
+            window.___gcfg = {lang: 'pt-BR'};
+            (function() {
+                var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;
+                po.src = "https://apis.google.com/js/plusone.js?publisherid=<?= SYS_SOCIAL_GP_PUBLISHER_ID ?>";
+                var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+
+        <!-- Includes -->
+        <?= $this->placeholder('script') ?>
+    </body>
+</html>
